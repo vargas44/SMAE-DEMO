@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   calculatePlanTotals,
+  energyProgressPct,
   roundTotals,
 } from "@/lib/smae/calculate";
 
@@ -69,5 +70,23 @@ describe("roundTotals", () => {
       carbG: 15.6,
       servings: 1.3,
     });
+  });
+});
+
+describe("energyProgressPct", () => {
+  it("calcula el % de energía respecto a la meta", () => {
+    expect(energyProgressPct(1105, 1800)).toBe(61);
+    expect(energyProgressPct(900, 1800)).toBe(50);
+    expect(energyProgressPct(1800, 1800)).toBe(100);
+  });
+
+  it("permite superar el 100% si el plan se pasa de la meta", () => {
+    expect(energyProgressPct(2160, 1800)).toBe(120);
+  });
+
+  it("devuelve 0 sin meta válida", () => {
+    expect(energyProgressPct(1105, null)).toBe(0);
+    expect(energyProgressPct(1105, 0)).toBe(0);
+    expect(energyProgressPct(1105, undefined)).toBe(0);
   });
 });

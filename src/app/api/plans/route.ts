@@ -20,6 +20,7 @@ const createSchema = z.object({
   patientId: z.string(),
   title: z.string().min(2),
   notes: z.string().optional(),
+  targetKcal: z.number().positive(),
   activate: z.boolean().optional(),
   slots: z.array(slotSchema).min(1),
 });
@@ -139,6 +140,7 @@ export async function POST(req: NextRequest) {
         createdById: session.user.id,
         title: body.title,
         notes: body.notes,
+        targetKcal: body.targetKcal,
         status: body.activate ? "ACTIVE" : "DRAFT",
         slots: {
           create: body.slots.map((slot) => ({

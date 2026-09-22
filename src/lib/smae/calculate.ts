@@ -43,3 +43,12 @@ export function roundTotals(totals: Totals, digits = 1): Totals {
     servings: r(totals.servings),
   };
 }
+
+/** Porcentaje de energía del plan respecto a la meta calórica (0–∞; UI puede capear el fill). */
+export function energyProgressPct(
+  energyKcal: number,
+  targetKcal: number | null | undefined,
+): number {
+  if (targetKcal == null || targetKcal <= 0) return 0;
+  return Math.round((energyKcal / targetKcal) * 100);
+}

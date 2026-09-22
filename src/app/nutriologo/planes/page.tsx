@@ -3,7 +3,11 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { TotalsBadge } from "@/components/TotalsBadge";
-import { calculatePlanTotals, roundTotals } from "@/lib/smae/calculate";
+import {
+  calculatePlanTotals,
+  energyProgressPct,
+  roundTotals,
+} from "@/lib/smae/calculate";
 
 export default async function PlanesPage() {
   const session = await auth();
@@ -30,6 +34,8 @@ export default async function PlanesPage() {
         const totals = roundTotals(
           calculatePlanTotals(plan.slots.flatMap((s) => s.items)),
         );
+        const pct = energyProgressPct(totals.energyKcal, plan.targetKcal);
+        const fillPct = Math.min(100, pct);
         return (
           <article key={plan.id} className="su-card su-stack">
             <div className="su-row">
@@ -43,11 +49,19 @@ export default async function PlanesPage() {
                 Abrir
               </Link>
             </div>
-            <div className="su-progress">
-              <div className="su-progress__track">
-                <div className="su-progress__fill" style={{ width: "58%" }} />
+            <div>
+              <p className="su-label" style={{ marginBottom: 8 }}>
+                Energía vs objetivo ({Math.round(totals.energyKcal)} / {plan.targetKcal} kcal)
+              </p>
+              <div className="su-progress">
+                <div className="su-progress__track">
+                  <div
+                    className="su-progress__fill"
+                    style={{ width: `${fillPct}%` }}
+                  />
+                </div>
+                <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>{pct}%</span>
               </div>
-              <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>58%</span>
             </div>
             <TotalsBadge totals={totals} />
           </article>

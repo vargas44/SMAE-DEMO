@@ -2,7 +2,11 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { TotalsBadge } from "@/components/TotalsBadge";
-import { calculatePlanTotals, roundTotals } from "@/lib/smae/calculate";
+import {
+  calculatePlanTotals,
+  energyProgressPct,
+  roundTotals,
+} from "@/lib/smae/calculate";
 import { MEAL_SLOT_LABELS } from "@/lib/smae/groups";
 
 type Props = { params: Promise<{ id: string }> };
@@ -34,6 +38,8 @@ export default async function PlanDetailPage({ params }: Props) {
   const totals = roundTotals(
     calculatePlanTotals(plan.slots.flatMap((s) => s.items)),
   );
+  const pct = energyProgressPct(totals.energyKcal, plan.targetKcal);
+  const fillPct = Math.min(100, pct);
 
   return (
     <div className="su-stack">
@@ -43,8 +49,19 @@ export default async function PlanDetailPage({ params }: Props) {
           {plan.title}
         </h2>
         <p className="su-subtitle">
-          {plan.patient.user.name} · {plan.status}
+          {plan.patient.user.name} · {plan.status} · meta {plan.targetKcal} kcal
         </p>
+      </div>
+      <div className="su-card">
+        <p className="su-label" style={{ marginBottom: 8 }}>
+          Energía vs objetivo ({Math.round(totals.energyKcal)} / {plan.targetKcal} kcal)
+        </p>
+        <div className="su-progress">
+          <div className="su-progress__track">
+            <div className="su-progress__fill" style={{ width: `${fillPct}%` }} />
+          </div>
+          <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>{pct}%</span>
+        </div>
       </div>
       <TotalsBadge totals={totals} />
       {plan.slots.map((slot) => (

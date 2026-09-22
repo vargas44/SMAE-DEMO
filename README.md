@@ -9,14 +9,18 @@ La aplicación digitaliza un catálogo SMAE, permite a un **nutriólogo** diseñ
 ## Funcionalidades
 
 ### Autenticación y roles
-- Login con credenciales
+- Login con credenciales (mostrar/ocultar contraseña)
 - Roles `NUTRIOLOGO` y `PACIENTE` con rutas y API protegidas
+- `AUTH_TRUST_HOST` / `trustHost` para acceso por IP en red local
 
 ### Nutriólogo
 - Listado y alta de pacientes
+- Métrica de **cobertura de planes** (`%` de pacientes con plan activo)
 - Ficha del paciente (datos básicos, objetivo, historial)
 - Diseño de planes SMAE por tiempos de comida (desayuno, colaciones, comida, cena)
+- Campo **meta calórica** (`targetKcal`) al crear el plan
 - Cálculo automático de kcal, proteína, lípidos y carbohidratos
+- Barra **energía vs objetivo** (`kcal del plan / meta × 100`) en historial y detalle
 - Activación / archivado de planes
 - Consulta del catálogo SMAE
 - Visualización del log de intercambios realizados por el paciente
@@ -32,6 +36,7 @@ La aplicación digitaliza un catálogo SMAE, permite a un **nutriólogo** diseñ
 ### Motor SMAE
 - Validación de equivalencias (`validateExchange`)
 - Totales nutricionales del plan (`calculatePlanTotals`)
+- Progreso energético vs meta (`energyProgressPct`)
 - Seed con ~10 grupos y más de 80 alimentos de ejemplo
 
 ---
@@ -46,6 +51,9 @@ La interfaz usa el kit **Soft UI**: superficie crema monócroma con profundidad 
 - Shell con topbar + navegación tipo **tabs** neumórficas
 - Botones pill (primary teal / secondary raised)
 - Inputs **inset**, cards raised, badges y barras de progreso soft
+- Logo y favicon desde `public/assets/images/icons/logo.png`
+- Fondo ilustrado solo en el login (`Fondo.jpg`)
+- Carrusel automático de **consejos SMAE** en el login
 - Login, paneles nutriólogo/paciente, catálogo, chat y diseñador de plan alineados al mismo sistema
 
 ### Paleta principal
@@ -102,6 +110,14 @@ npm run dev
 
 Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 
+### Compartir en la misma Wi‑Fi (LAN)
+
+```bash
+npx next dev -H 0.0.0.0 -p 3000
+```
+
+En `next.config.ts` está `allowedDevOrigins` con la IP local (ej. `192.168.0.251`) para que el login hidrate bien desde otros dispositivos. Abrí `http://<tu-ip-wifi>:3000`.
+
 ### Scripts útiles
 
 | Comando | Descripción |
@@ -125,15 +141,15 @@ Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 | Paciente | `paciente@demo.com` | `demo1234` |
 | Paciente 2 | `paciente2@demo.com` | `demo1234` |
 
-El paciente principal (`paciente@demo.com`) ya tiene un **plan activo** cargado para probar intercambios de inmediato.
+El paciente principal (`paciente@demo.com`) ya tiene un **plan activo** (meta 1800 kcal) para probar intercambios de inmediato.
 
 ---
 
 ## Guion rápido de demo (5 minutos)
 
-1. Ingresá como **nutriólogo** y revisá la lista de pacientes.
+1. Ingresá como **nutriólogo** y revisá la lista de pacientes y la cobertura de planes.
 2. Abrí el catálogo SMAE y el detalle de Carlos Mendoza.
-3. Creá o activá un plan y observá los totales kcal/macros.
+3. Creá o activá un plan (con meta calórica) y observá la barra energía vs objetivo.
 4. Cerrá sesión e ingresá como **paciente**.
 5. Cambiá un alimento por un equivalente del mismo grupo.
 6. Volvé como nutriólogo y verificá el log de intercambios / chat.
@@ -142,13 +158,14 @@ El paciente principal (`paciente@demo.com`) ya tiene un **plan activo** cargado 
 
 ## Tests
 
-La suite (27 tests) cubre:
+La suite (~50 tests) cubre:
 
 - Cálculo de macros / totales del plan (`calculatePlanTotals`)
+- Progreso energético vs meta (`energyProgressPct`)
 - Validación de intercambios SMAE (`validateExchange`)
 - Orden y etiquetas de tiempos de comida
 - RBAC de sesión (`requireSession` / `requireRole`)
-- API de intercambios, planes y catálogo (con mocks)
+- API de intercambios, planes, pacientes, adherencia, mensajes y catálogo (con mocks)
 
 ```bash
 npm run test
@@ -161,9 +178,14 @@ npm run test
 ```
 smae-demo/
   prisma/           # Schema, seed y catálogo JSON
+  public/
+    assets/
+      images/
+        backgrounds/  # Fondo del login
+        icons/        # Logo / favicon
   src/
-    app/            # Páginas y Route Handlers (API)
-    components/     # UI Soft UI (AppShell, cards, forms)
+    app/            # Páginas, iconos Next y Route Handlers (API)
+    components/     # UI Soft UI (AppShell, carrusel, forms)
     lib/            # Auth, Prisma y motor SMAE
   vitest.config.ts  # Configuración de tests
 ```

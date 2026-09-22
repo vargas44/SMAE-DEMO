@@ -25,7 +25,11 @@ export function AppShell({
         <header className="su-topbar">
           <div className="su-brand">
             <div className="su-brand-mark" aria-hidden>
-              SM
+              <img
+                src="/assets/images/icons/logo.png"
+                alt=""
+                className="su-brand-mark__img"
+              />
             </div>
             <div>
               <p className="su-brand-name">{brand}</p>

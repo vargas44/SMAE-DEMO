@@ -96,6 +96,7 @@ model MealPlan {
   createdById String
   title       String
   notes       String?
+  targetKcal  Float      @default(1800)
   status      PlanStatus @default(DRAFT)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt

@@ -185,6 +185,7 @@ async function main() {
         createdById: nutriologo.id,
         title: "Plan 1800 kcal — semana demo",
         notes: "Plan de ejemplo para la defensa del TFG",
+        targetKcal: 1800,
         status: "ACTIVE",
         slots: {
           create: [

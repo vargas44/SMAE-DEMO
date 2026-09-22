@@ -33,6 +33,7 @@ export function PlanBuilder({
   const router = useRouter();
   const [title, setTitle] = useState("Plan SMAE personalizado");
   const [notes, setNotes] = useState("");
+  const [targetKcal, setTargetKcal] = useState(1800);
   const [activate, setActivate] = useState(true);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -122,6 +123,7 @@ export function PlanBuilder({
       patientId,
       title,
       notes,
+      targetKcal,
       activate,
       slots: slots
         .filter((s) => s.items.length > 0)
@@ -133,6 +135,12 @@ export function PlanBuilder({
           })),
         })),
     };
+
+    if (!Number.isFinite(targetKcal) || targetKcal <= 0) {
+      setError("Indicá una meta calórica válida (kcal).");
+      setSaving(false);
+      return;
+    }
 
     if (payload.slots.length === 0) {
       setError("Agregá al menos un alimento en algún tiempo de comida.");
@@ -163,6 +171,18 @@ export function PlanBuilder({
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="su-field"
+            style={{ marginTop: 8 }}
+          />
+        </label>
+        <label>
+          <span className="su-label">Meta calórica (kcal)</span>
+          <input
+            type="number"
+            min={1}
+            step={50}
+            value={targetKcal}
+            onChange={(e) => setTargetKcal(Number(e.target.value))}
             className="su-field"
             style={{ marginTop: 8 }}
           />

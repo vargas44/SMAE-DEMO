@@ -67,6 +67,7 @@ describe("POST /api/plans", () => {
       postJson({
         patientId: "patient-1",
         title: "Plan demo",
+        targetKcal: 1800,
         activate: true,
         slots: [
           {
@@ -83,6 +84,8 @@ describe("POST /api/plans", () => {
       data: { status: "ARCHIVED" },
     });
     expect(createPlan).toHaveBeenCalled();
+    const createArg = createPlan.mock.calls[0][0];
+    expect(createArg.data.targetKcal).toBe(1800);
     const data = await res.json();
     expect(data.totals.energyKcal).toBe(140);
   });
@@ -95,6 +98,7 @@ describe("POST /api/plans", () => {
       postJson({
         patientId: "patient-1",
         title: "Plan",
+        targetKcal: 1500,
         slots: [{ type: "LUNCH", items: [{ foodId: "f1", servings: 1 }] }],
       }),
     );
@@ -103,6 +107,18 @@ describe("POST /api/plans", () => {
 
   it("valida el body del plan", async () => {
     const res = await POST(postJson({ patientId: "patient-1", title: "x" }));
+    expect(res.status).toBe(400);
+  });
+
+  it("exige targetKcal positivo", async () => {
+    const res = await POST(
+      postJson({
+        patientId: "patient-1",
+        title: "Plan sin meta",
+        targetKcal: 0,
+        slots: [{ type: "LUNCH", items: [{ foodId: "f1", servings: 1 }] }],
+      }),
+    );
     expect(res.status).toBe(400);
   });
 });

@@ -22,6 +22,8 @@ export default async function NutriologoHomePage() {
   });
 
   const withPlan = patients.filter((p) => p.plans.length > 0).length;
+  const coveragePct =
+    patients.length === 0 ? 0 : Math.round((withPlan / patients.length) * 100);
 
   return (
     <div className="su-stack">
@@ -39,12 +41,17 @@ export default async function NutriologoHomePage() {
           <p className="su-metric su-metric--muted">SMAE</p>
         </div>
         <div className="su-card su-rise su-rise-3">
-          <p className="su-label">Demo</p>
+          <p className="su-label">Cobertura de planes</p>
           <div className="su-progress" style={{ marginTop: 14 }}>
             <div className="su-progress__track">
-              <div className="su-progress__fill" style={{ width: "72%" }} />
+              <div
+                className="su-progress__fill"
+                style={{ width: `${coveragePct}%` }}
+              />
             </div>
-            <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>72%</span>
+            <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>
+              {coveragePct}%
+            </span>
           </div>
         </div>
       </section>

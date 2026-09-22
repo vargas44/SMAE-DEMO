@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   title: "SMAE Demo — Trabajo Final",
   description:
     "Demo web del Sistema Mexicano de Alimentos Equivalentes con perfiles nutriólogo y paciente",
+  icons: {
+    icon: [{ url: "/assets/images/icons/logo.png", type: "image/png" }],
+    apple: [{ url: "/assets/images/icons/logo.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

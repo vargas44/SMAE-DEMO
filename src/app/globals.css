@@ -56,6 +56,9 @@
     inset -3px -3px 8px var(--su-shadow-light);
 
   --su-focus-ring: 0 0 0 3px color-mix(in srgb, var(--su-teal) 28%, transparent);
+
+  /* Multimedia */
+  --su-bg-image: url("/assets/images/backgrounds/Fondo.jpg");
 }
 
 @theme inline {
@@ -71,9 +74,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--su-bg);
   color: var(--su-ink);
   font-family: var(--su-font);
+  background: var(--su-bg);
 }
 
 ::selection {
@@ -83,10 +86,25 @@ body {
 
 .su-page {
   min-height: 100vh;
-  background: var(--su-bg);
+  background: transparent;
   color: var(--su-ink);
   font-family: var(--su-font);
   padding: 28px 20px 40px;
+}
+
+.su-page--login {
+  background-color: var(--su-bg);
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(245, 242, 232, 0.57) 0%,
+      rgba(245, 242, 232, 0.67) 100%
+    ),
+    var(--su-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .su-shell {
@@ -119,13 +137,21 @@ body {
   width: 42px;
   height: 42px;
   border-radius: var(--su-r-3);
-  background: var(--su-teal);
+  background: var(--su-surface);
   box-shadow: var(--su-elev-2);
   display: grid;
   place-items: center;
+  overflow: hidden;
   color: var(--su-white);
   font-weight: 700;
   font-size: 14px;
+}
+
+.su-brand-mark__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .su-brand-name {
@@ -369,6 +395,41 @@ select.su-field {
   box-shadow: var(--su-inset), var(--su-focus-ring);
 }
 
+.su-password-field {
+  position: relative;
+}
+
+.su-password-field .su-field {
+  padding-right: 44px;
+}
+
+.su-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--su-r-1);
+  background: transparent;
+  color: var(--su-ink-muted);
+  cursor: pointer;
+}
+
+.su-password-toggle:hover {
+  color: var(--su-teal);
+}
+
+.su-password-toggle:focus-visible {
+  outline: 2px solid var(--su-teal);
+  outline-offset: 2px;
+}
+
 .su-badge {
   display: inline-flex;
   align-items: center;
@@ -408,6 +469,67 @@ select.su-field {
   height: 100%;
   border-radius: inherit;
   background: var(--su-teal);
+}
+
+.su-tips {
+  margin-top: 28px;
+  padding: 14px 16px;
+  border-radius: var(--su-r-3);
+  background: var(--su-surface);
+  box-shadow: var(--su-inset);
+}
+
+.su-tips__viewport {
+  min-height: 4.6em;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.su-tips__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--su-ink);
+  animation: su-tip-in 420ms ease-out both;
+}
+
+.su-tips__dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.su-tips__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--su-shadow-dark);
+  box-shadow: var(--su-elev-2);
+  cursor: pointer;
+  transition: width 200ms ease, background 200ms ease;
+}
+
+.su-tips__dot.is-active {
+  width: 22px;
+  background: var(--su-teal);
+}
+
+.su-tips__dot:focus-visible {
+  outline: 2px solid var(--su-teal);
+  outline-offset: 2px;
+}
+
+@keyframes su-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .su-check,
@@ -503,7 +625,8 @@ select.su-field {
   .su-rise-1,
   .su-rise-2,
   .su-rise-3,
-  .su-rise-4 {
+  .su-rise-4,
+  .su-tips__text {
     animation: none;
   }
 }
