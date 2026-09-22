@@ -1,0 +1,98 @@
+{
+  "vegetales": [
+    { "name": "Acelga cocida", "portionLabel": "1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Apio crudo", "portionLabel": "1 1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Brócoli cocido", "portionLabel": "1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Calabacita cocida", "portionLabel": "1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Champiñones crudos", "portionLabel": "1 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Ejotes cocidos", "portionLabel": "1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Espinaca cruda", "portionLabel": "2 tazas", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Jitomate rojo", "portionLabel": "1 pieza mediana", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Lechuga", "portionLabel": "2 tazas", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Nopales cocidos", "portionLabel": "1 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Pepino", "portionLabel": "1 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 },
+    { "name": "Zanahoria cruda", "portionLabel": "1/2 taza", "energyKcal": 25, "proteinG": 2, "lipidG": 0, "carbG": 4 }
+  ],
+  "frutas": [
+    { "name": "Manzana", "portionLabel": "1 pieza chica", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Plátano", "portionLabel": "1/2 pieza mediana", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Naranja", "portionLabel": "1 pieza mediana", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Papaya", "portionLabel": "1 taza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Sandía", "portionLabel": "1 1/4 taza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Melón", "portionLabel": "1 taza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Fresa", "portionLabel": "1 taza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Mango", "portionLabel": "1/2 pieza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Pera", "portionLabel": "1/2 pieza grande", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Uva", "portionLabel": "10 piezas", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Piña", "portionLabel": "3/4 taza", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 },
+    { "name": "Guayaba", "portionLabel": "2 piezas", "energyKcal": 60, "proteinG": 0, "lipidG": 0, "carbG": 15 }
+  ],
+  "cereales": [
+    { "name": "Tortilla de maíz", "portionLabel": "1 pieza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Pan de caja", "portionLabel": "1 rebanada", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Arroz cocido", "portionLabel": "1/4 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Pasta cocida", "portionLabel": "1/3 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Avena cocida", "portionLabel": "1/2 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Papa cocida", "portionLabel": "1/2 pieza mediana", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Elote cocido", "portionLabel": "1/2 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Galleta María", "portionLabel": "5 piezas", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Cereal sin azúcar", "portionLabel": "1/2 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Bolillo sin migajón", "portionLabel": "1/3 pieza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Amaranto tostado", "portionLabel": "1/4 taza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 },
+    { "name": "Tostada horneada", "portionLabel": "1 pieza", "energyKcal": 70, "proteinG": 2, "lipidG": 0, "carbG": 15 }
+  ],
+  "aoa_bajo": [
+    { "name": "Clara de huevo", "portionLabel": "2 piezas", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Atún en agua", "portionLabel": "1/3 lata", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Pechuga de pollo sin piel", "portionLabel": "30 g", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Pescado blanco", "portionLabel": "30 g", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Requesón", "portionLabel": "1/4 taza", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Jamón de pavo bajo en grasa", "portionLabel": "2 rebanadas", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Camarón cocido", "portionLabel": "5 piezas medianas", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" },
+    { "name": "Queso panela", "portionLabel": "40 g", "energyKcal": 40, "proteinG": 7, "lipidG": 1, "carbG": 0, "subtype": "bajo" }
+  ],
+  "aoa_moderado": [
+    { "name": "Huevo entero", "portionLabel": "1 pieza", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" },
+    { "name": "Carne de res magra", "portionLabel": "30 g", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" },
+    { "name": "Pollo con piel", "portionLabel": "30 g", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" },
+    { "name": "Atún en aceite escurrido", "portionLabel": "1/3 lata", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" },
+    { "name": "Queso fresco", "portionLabel": "40 g", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" },
+    { "name": "Salchicha de pavo", "portionLabel": "1 pieza", "energyKcal": 75, "proteinG": 7, "lipidG": 5, "carbG": 0, "subtype": "moderado" }
+  ],
+  "lacteos_descremados": [
+    { "name": "Leche descremada", "portionLabel": "1 taza", "energyKcal": 95, "proteinG": 9, "lipidG": 2, "carbG": 12, "subtype": "descremado" },
+    { "name": "Yogurt natural light", "portionLabel": "1 taza", "energyKcal": 95, "proteinG": 9, "lipidG": 2, "carbG": 12, "subtype": "descremado" },
+    { "name": "Leche de soya light", "portionLabel": "1 taza", "energyKcal": 95, "proteinG": 9, "lipidG": 2, "carbG": 12, "subtype": "descremado" },
+    { "name": "Queso cottage light", "portionLabel": "1/4 taza", "energyKcal": 95, "proteinG": 9, "lipidG": 2, "carbG": 12, "subtype": "descremado" }
+  ],
+  "lacteos_semidescremados": [
+    { "name": "Leche semidescremada", "portionLabel": "1 taza", "energyKcal": 110, "proteinG": 9, "lipidG": 4, "carbG": 12, "subtype": "semidescremado" },
+    { "name": "Yogurt natural", "portionLabel": "3/4 taza", "energyKcal": 110, "proteinG": 9, "lipidG": 4, "carbG": 12, "subtype": "semidescremado" },
+    { "name": "Leche evaporada semidescremada", "portionLabel": "1/2 taza", "energyKcal": 110, "proteinG": 9, "lipidG": 4, "carbG": 12, "subtype": "semidescremado" }
+  ],
+  "grasas": [
+    { "name": "Aceite vegetal", "portionLabel": "1 cucharadita", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Aguacate", "portionLabel": "1/3 pieza", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Aceitunas", "portionLabel": "5 piezas", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Crema para batir light", "portionLabel": "1 cucharada", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Semillas de chía", "portionLabel": "1 cucharadita", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Almendras", "portionLabel": "5 piezas", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Cacahuate", "portionLabel": "8 piezas", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 },
+    { "name": "Mayonesa light", "portionLabel": "1 cucharadita", "energyKcal": 45, "proteinG": 0, "lipidG": 5, "carbG": 0 }
+  ],
+  "azucares": [
+    { "name": "Azúcar de mesa", "portionLabel": "1 cucharadita", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 },
+    { "name": "Miel", "portionLabel": "1 cucharadita", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 },
+    { "name": "Mermelada", "portionLabel": "1 cucharadita", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 },
+    { "name": "Chocolate en polvo", "portionLabel": "2 cucharaditas", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 },
+    { "name": "Gelatina regular", "portionLabel": "1/2 taza", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 },
+    { "name": "Refresco regular", "portionLabel": "1/3 lata", "energyKcal": 40, "proteinG": 0, "lipidG": 0, "carbG": 10 }
+  ],
+  "leguminosas": [
+    { "name": "Frijol cocido", "portionLabel": "1/2 taza", "energyKcal": 120, "proteinG": 8, "lipidG": 1, "carbG": 20 },
+    { "name": "Lenteja cocida", "portionLabel": "1/2 taza", "energyKcal": 120, "proteinG": 8, "lipidG": 1, "carbG": 20 },
+    { "name": "Garbanzo cocido", "portionLabel": "1/2 taza", "energyKcal": 120, "proteinG": 8, "lipidG": 1, "carbG": 20 },
+    { "name": "Haba cocida", "portionLabel": "1/2 taza", "energyKcal": 120, "proteinG": 8, "lipidG": 1, "carbG": 20 },
+    { "name": "Soya texturizada cocida", "portionLabel": "1/3 taza", "energyKcal": 120, "proteinG": 8, "lipidG": 1, "carbG": 20 }
+  ]
+}

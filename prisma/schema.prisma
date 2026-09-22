@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  NUTRIOLOGO
+  PACIENTE
+}
+
+enum PlanStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum MealSlotType {
+  BREAKFAST
+  SNACK1
+  LUNCH
+  SNACK2
+  DINNER
+  SNACK3
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  patientProfile      PatientProfile?  @relation("PatientUser")
+  patientsAsNutri     PatientProfile[] @relation("NutritionistPatients")
+  plansCreated        MealPlan[]       @relation("PlansCreated")
+  messagesSent        Message[]        @relation("MessagesSent")
+  messagesReceived    Message[]        @relation("MessagesReceived")
+  exchanges           ExchangeLog[]
+}
+
+model PatientProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  nutritionistId String
+  age            Int?
+  sex            String?
+  weightKg       Float?
+  heightCm       Float?
+  goal           String?
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User       @relation("PatientUser", fields: [userId], references: [id], onDelete: Cascade)
+  nutritionist User       @relation("NutritionistPatients", fields: [nutritionistId], references: [id])
+  plans        MealPlan[]
+  adherence    DailyAdherence[]
+}
+
+model FoodGroup {
+  id          String @id @default(cuid())
+  code        String @unique
+  name        String
+  description String?
+  foods       Food[]
+}
+
+model Food {
+  id           String  @id @default(cuid())
+  groupId      String
+  name         String
+  portionLabel String
+  energyKcal   Float
+  proteinG     Float
+  lipidG       Float
+  carbG        Float
+  subtype      String?
+
+  group      FoodGroup     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  planItems  PlanItem[]
+  exchangesFrom ExchangeLog[] @relation("ExchangeFrom")
+  exchangesTo   ExchangeLog[] @relation("ExchangeTo")
+
+  @@index([groupId, name])
+}
+
+model MealPlan {
+  id          String     @id @default(cuid())
+  patientId   String
+  createdById String
+  title       String
+  notes       String?
+  status      PlanStatus @default(DRAFT)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  patient   PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  createdBy User           @relation("PlansCreated", fields: [createdById], references: [id])
+  slots     MealSlot[]
+  exchanges ExchangeLog[]
+
+  @@index([patientId, status])
+}
+
+model MealSlot {
+  id     String       @id @default(cuid())
+  planId String
+  type   MealSlotType
+  label  String?
+
+  plan  MealPlan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+  items PlanItem[]
+
+  @@unique([planId, type])
+}
+
+model PlanItem {
+  id         String @id @default(cuid())
+  mealSlotId String
+  foodId     String
+  servings   Float  @default(1)
+
+  mealSlot MealSlot @relation(fields: [mealSlotId], references: [id], onDelete: Cascade)
+  food     Food     @relation(fields: [foodId], references: [id])
+
+  @@index([mealSlotId])
+}
+
+model ExchangeLog {
+  id          String   @id @default(cuid())
+  planId      String
+  userId      String
+  fromFoodId  String
+  toFoodId    String
+  servings    Float
+  planItemId  String?
+  createdAt   DateTime @default(now())
+
+  plan     MealPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id])
+  fromFood Food     @relation("ExchangeFrom", fields: [fromFoodId], references: [id])
+  toFood   Food     @relation("ExchangeTo", fields: [toFoodId], references: [id])
+}
+
+model DailyAdherence {
+  id        String   @id @default(cuid())
+  patientId String
+  date      String
+  notes     String?
+  breakfast Boolean  @default(false)
+  snack1    Boolean  @default(false)
+  lunch     Boolean  @default(false)
+  snack2    Boolean  @default(false)
+  dinner    Boolean  @default(false)
+  snack3    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@unique([patientId, date])
+}
+
+model Message {
+  id         String    @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  body       String
+  createdAt  DateTime  @default(now())
+  readAt     DateTime?
+
+  fromUser User @relation("MessagesSent", fields: [fromUserId], references: [id])
+  toUser   User @relation("MessagesReceived", fields: [toUserId], references: [id])
+
+  @@index([fromUserId, toUserId, createdAt])
+}

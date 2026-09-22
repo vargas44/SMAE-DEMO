@@ -1,0 +1,30 @@
+import { notFound, redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { ChatBox } from "@/components/ChatBox";
+
+type Props = { params: Promise<{ userId: string }> };
+
+export default async function PacienteChatPage({ params }: Props) {
+  const session = await auth();
+  if (!session?.user || session.user.role !== "PACIENTE") redirect("/login");
+  const { userId } = await params;
+
+  const profile = await prisma.patientProfile.findUnique({
+    where: { userId: session.user.id },
+  });
+  if (!profile || profile.nutritionistId !== userId) notFound();
+
+  const other = await prisma.user.findUnique({ where: { id: userId } });
+  if (!other) notFound();
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-xl font-semibold">Chat con {other.name}</h2>
+        <p className="text-sm text-slate-600">Mensajería simple de la demo.</p>
+      </div>
+      <ChatBox withUserId={other.id} />
+    </div>
+  );
+}
