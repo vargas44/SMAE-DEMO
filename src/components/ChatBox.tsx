@@ -43,37 +43,48 @@ export function ChatBox({ withUserId }: { withUserId: string }) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white">
-      <div className="max-h-[420px] space-y-2 overflow-y-auto p-4">
+    <div className="su-card" style={{ padding: 0, overflow: "hidden" }}>
+      <div style={{ maxHeight: 420, overflowY: "auto", padding: 18 }} className="su-stack">
         {messages.map((m) => (
-          <div key={m.id} className="rounded-lg bg-slate-50 px-3 py-2 text-sm">
-            <p className="text-xs text-slate-500">
-              {m.fromUser.name} ·{" "}
-              {new Date(m.createdAt).toLocaleString("es-AR")}
+          <div
+            key={m.id}
+            className="su-inset-box"
+            style={{ borderRadius: 12, padding: "12px 14px" }}
+          >
+            <p className="su-label">
+              {m.fromUser.name} · {new Date(m.createdAt).toLocaleString("es-AR")}
             </p>
-            <p>{m.body}</p>
+            <p style={{ margin: "8px 0 0", lineHeight: 1.5 }}>{m.body}</p>
           </div>
         ))}
         {messages.length === 0 ? (
-          <p className="text-sm text-slate-500">Sin mensajes todavía.</p>
+          <p style={{ color: "var(--su-ink-muted)" }}>Sin mensajes todavía.</p>
         ) : null}
       </div>
-      <form onSubmit={send} className="flex gap-2 border-t border-slate-100 p-3">
+      <form
+        onSubmit={send}
+        style={{
+          display: "flex",
+          gap: 8,
+          padding: 14,
+          background: "var(--su-surface-muted)",
+        }}
+      >
         <input
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Escribí un mensaje…"
-          className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm"
+          className="su-field"
+          style={{ flex: 1 }}
           required
         />
-        <button
-          type="submit"
-          className="rounded-lg bg-emerald-700 px-4 py-2 text-sm text-white"
-        >
+        <button type="submit" className="su-btn su-btn--primary">
           Enviar
         </button>
       </form>
-      {error ? <p className="px-3 pb-3 text-sm text-red-600">{error}</p> : null}
+      {error ? (
+        <p style={{ padding: "0 14px 14px", color: "var(--su-danger)" }}>{error}</p>
+      ) : null}
     </div>
   );
 }

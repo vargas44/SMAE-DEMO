@@ -21,53 +21,80 @@ export default async function NutriologoHomePage() {
     orderBy: { createdAt: "desc" },
   });
 
+  const withPlan = patients.filter((p) => p.plans.length > 0).length;
+
   return (
-    <div className="space-y-8">
-      <section>
-        <h2 className="text-xl font-semibold text-slate-900">Pacientes</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          Gestioná perfiles, planes SMAE e intercambios.
-        </p>
+    <div className="su-stack">
+      <section className="su-grid-metrics">
+        <div className="su-card su-rise">
+          <p className="su-label">Pacientes</p>
+          <p className="su-metric">{patients.length}</p>
+        </div>
+        <div className="su-card su-rise su-rise-1">
+          <p className="su-label">Con plan activo</p>
+          <p className="su-metric su-metric--muted">{withPlan}</p>
+        </div>
+        <div className="su-card su-rise su-rise-2">
+          <p className="su-label">Catálogo</p>
+          <p className="su-metric su-metric--muted">SMAE</p>
+        </div>
+        <div className="su-card su-rise su-rise-3">
+          <p className="su-label">Demo</p>
+          <div className="su-progress" style={{ marginTop: 14 }}>
+            <div className="su-progress__track">
+              <div className="su-progress__fill" style={{ width: "72%" }} />
+            </div>
+            <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>72%</span>
+          </div>
+        </div>
       </section>
 
-      <div className="grid gap-3">
+      <div>
+        <p className="su-label">My patients</p>
+        <h2 className="su-title" style={{ fontSize: "1.35rem", marginTop: 6 }}>
+          Pacientes
+        </h2>
+      </div>
+
+      <div className="su-stack">
         {patients.map((p) => (
-          <div
-            key={p.id}
-            className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3"
-          >
-            <div>
-              <p className="font-medium text-slate-900">{p.user.name}</p>
-              <p className="text-sm text-slate-500">{p.user.email}</p>
-              <p className="text-xs text-slate-500">
-                {p.goal || "Sin objetivo cargado"}
-                {p.plans[0] ? ` · Plan activo: ${p.plans[0].title}` : " · Sin plan activo"}
-              </p>
+          <article key={p.id} className="su-card su-list-item">
+            <div className="su-row">
+              <div>
+                <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>
+                  {p.user.name}
+                </h3>
+                <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
+                  {p.user.email}
+                </p>
+                <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+                  {p.plans[0] ? (
+                    <span className="su-badge">Plan activo</span>
+                  ) : (
+                    <span className="su-badge su-badge--2">Sin plan</span>
+                  )}
+                  {p.goal ? <span className="su-badge su-badge--3">{p.goal}</span> : null}
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <Link href={`/nutriologo/pacientes/${p.id}`} className="su-btn su-btn--primary">
+                  Ver ficha
+                </Link>
+                <Link
+                  href={`/nutriologo/pacientes/${p.id}/plan-nuevo`}
+                  className="su-btn su-btn--secondary"
+                >
+                  + Nuevo plan
+                </Link>
+                <Link href={`/nutriologo/chat/${p.user.id}`} className="su-btn su-btn--secondary">
+                  Chat
+                </Link>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <Link
-                href={`/nutriologo/pacientes/${p.id}`}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm text-white hover:bg-emerald-800"
-              >
-                Ver ficha
-              </Link>
-              <Link
-                href={`/nutriologo/pacientes/${p.id}/plan-nuevo`}
-                className="rounded-md border border-slate-200 px-3 py-1.5 text-sm hover:bg-slate-50"
-              >
-                Nuevo plan
-              </Link>
-              <Link
-                href={`/nutriologo/chat/${p.user.id}`}
-                className="rounded-md border border-slate-200 px-3 py-1.5 text-sm hover:bg-slate-50"
-              >
-                Chat
-              </Link>
-            </div>
-          </div>
+          </article>
         ))}
         {patients.length === 0 ? (
-          <p className="text-sm text-slate-500">Todavía no hay pacientes.</p>
+          <p style={{ color: "var(--su-ink-muted)" }}>Todavía no hay pacientes.</p>
         ) : null}
       </div>
 

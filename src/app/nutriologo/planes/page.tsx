@@ -19,30 +19,35 @@ export default async function PlanesPage() {
   });
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Planes</h2>
+    <div className="su-stack">
+      <div>
+        <p className="su-label">Planes</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          Historial
+        </h2>
+      </div>
       {plans.map((plan) => {
         const totals = roundTotals(
           calculatePlanTotals(plan.slots.flatMap((s) => s.items)),
         );
         return (
-          <article
-            key={plan.id}
-            className="space-y-3 rounded-xl border border-slate-200 bg-white p-4"
-          >
-            <div className="flex flex-wrap items-center justify-between gap-2">
+          <article key={plan.id} className="su-card su-stack">
+            <div className="su-row">
               <div>
-                <p className="font-medium">{plan.title}</p>
-                <p className="text-sm text-slate-500">
+                <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
+                <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
                   {plan.patient.user.name} · {plan.status}
                 </p>
               </div>
-              <Link
-                href={`/nutriologo/planes/${plan.id}`}
-                className="rounded-md border px-3 py-1.5 text-sm"
-              >
+              <Link href={`/nutriologo/planes/${plan.id}`} className="su-btn su-btn--primary">
                 Abrir
               </Link>
+            </div>
+            <div className="su-progress">
+              <div className="su-progress__track">
+                <div className="su-progress__fill" style={{ width: "58%" }} />
+              </div>
+              <span style={{ fontWeight: 700, color: "var(--su-teal)" }}>58%</span>
             </div>
             <TotalsBadge totals={totals} />
           </article>

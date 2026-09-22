@@ -3,9 +3,6 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const inputClass =
-  "rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none ring-emerald-600 focus:ring-2";
-
 export function CreatePatientForm() {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -43,26 +40,45 @@ export function CreatePatientForm() {
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5">
-      <h3 className="font-semibold text-slate-900">Alta de paciente</h3>
-      <form onSubmit={onSubmit} className="mt-4 grid gap-3 sm:grid-cols-2">
-        <input name="name" required placeholder="Nombre" className={inputClass} />
-        <input name="email" type="email" required placeholder="Email" className={inputClass} />
-        <input name="password" placeholder="Contraseña (default demo1234)" className={inputClass} />
-        <input name="age" type="number" placeholder="Edad" className={inputClass} />
-        <input name="sex" placeholder="Sexo (M/F)" className={inputClass} />
-        <input name="weightKg" type="number" step="0.1" placeholder="Peso kg" className={inputClass} />
-        <input name="heightCm" type="number" step="0.1" placeholder="Talla cm" className={inputClass} />
-        <input name="goal" placeholder="Objetivo" className={`${inputClass} sm:col-span-2`} />
+    <section className="su-card">
+      <p className="su-label">Altas</p>
+      <h3 style={{ margin: "8px 0 0", fontSize: 20 }}>+ Nuevo paciente</h3>
+      <form
+        onSubmit={onSubmit}
+        style={{
+          marginTop: 18,
+          display: "grid",
+          gap: 12,
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        }}
+      >
+        <input name="name" required placeholder="Nombre" className="su-field" />
+        <input name="email" type="email" required placeholder="Email" className="su-field" />
+        <input name="password" placeholder="Contraseña (default demo1234)" className="su-field" />
+        <input name="age" type="number" placeholder="Edad" className="su-field" />
+        <input name="sex" placeholder="Sexo (M/F)" className="su-field" />
+        <input name="weightKg" type="number" step="0.1" placeholder="Peso kg" className="su-field" />
+        <input name="heightCm" type="number" step="0.1" placeholder="Talla cm" className="su-field" />
+        <input
+          name="goal"
+          placeholder="Objetivo"
+          className="su-field"
+          style={{ gridColumn: "1 / -1" }}
+        />
         <button
           type="submit"
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm text-white sm:col-span-2"
+          className="su-btn su-btn--primary"
+          style={{ gridColumn: "1 / -1", width: "fit-content" }}
         >
-          Crear paciente
+          + Crear paciente
         </button>
       </form>
-      {error ? <p className="mt-2 text-sm text-red-600">{error}</p> : null}
-      {ok ? <p className="mt-2 text-sm text-emerald-700">{ok}</p> : null}
+      {error ? (
+        <p style={{ marginTop: 12, color: "var(--su-danger)", fontWeight: 600 }}>{error}</p>
+      ) : null}
+      {ok ? (
+        <p style={{ marginTop: 12, color: "var(--su-success)", fontWeight: 600 }}>{ok}</p>
+      ) : null}
     </section>
   );
 }

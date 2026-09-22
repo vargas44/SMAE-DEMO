@@ -8,22 +8,53 @@ export function TotalsBadge({
     carbG: number;
   };
 }) {
+  const items = [
+    {
+      label: "Energía",
+      value: totals.energyKcal,
+      unit: "kcal",
+      delay: "su-rise",
+    },
+    {
+      label: "Proteína",
+      value: totals.proteinG,
+      unit: "g",
+      delay: "su-rise su-rise-1",
+      muted: true,
+    },
+    {
+      label: "Lípidos",
+      value: totals.lipidG,
+      unit: "g",
+      delay: "su-rise su-rise-2",
+      muted: true,
+    },
+    {
+      label: "HC",
+      value: totals.carbG,
+      unit: "g",
+      delay: "su-rise su-rise-3",
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-      {[
-        { label: "Energía", value: `${totals.energyKcal} kcal` },
-        { label: "Proteína", value: `${totals.proteinG} g` },
-        { label: "Lípidos", value: `${totals.lipidG} g` },
-        { label: "HC", value: `${totals.carbG} g` },
-      ].map((item) => (
-        <div
-          key={item.label}
-          className="rounded-lg border border-emerald-100 bg-emerald-50/70 px-3 py-2"
-        >
-          <p className="text-[11px] uppercase tracking-wide text-emerald-800/70">
-            {item.label}
+    <div className="su-grid-metrics">
+      {items.map((item) => (
+        <div key={item.label} className={`su-card ${item.delay}`}>
+          <p className="su-label">{item.label}</p>
+          <p className={`su-metric${item.muted ? " su-metric--muted" : ""}`}>
+            {item.value}
+            <span
+              style={{
+                marginLeft: 6,
+                fontSize: 14,
+                fontWeight: 600,
+                color: "var(--su-ink-muted)",
+              }}
+            >
+              {item.unit}
+            </span>
           </p>
-          <p className="text-sm font-semibold text-emerald-950">{item.value}</p>
         </div>
       ))}
     </div>

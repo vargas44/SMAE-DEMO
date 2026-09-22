@@ -22,7 +22,11 @@ export default async function PatientDetailPage({ params }: Props) {
         include: {
           slots: { include: { items: { include: { food: true } } } },
           exchanges: {
-            include: { fromFood: true, toFood: true, user: { select: { name: true } } },
+            include: {
+              fromFood: true,
+              toFood: true,
+              user: { select: { name: true } },
+            },
             orderBy: { createdAt: "desc" },
             take: 10,
           },
@@ -34,66 +38,76 @@ export default async function PatientDetailPage({ params }: Props) {
   if (!patient) notFound();
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-xl border border-slate-200 bg-white p-5">
-        <h2 className="text-xl font-semibold">{patient.user.name}</h2>
-        <p className="text-sm text-slate-500">{patient.user.email}</p>
-        <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+    <div className="su-stack">
+      <div className="su-card">
+        <p className="su-label">Ficha</p>
+        <h2 style={{ margin: "8px 0 0", fontSize: 24 }}>{patient.user.name}</h2>
+        <p style={{ marginTop: 4, color: "var(--su-ink-muted)" }}>{patient.user.email}</p>
+        <dl
+          style={{
+            marginTop: 18,
+            display: "grid",
+            gap: 12,
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            fontSize: 14,
+          }}
+        >
           <div>
-            <dt className="text-slate-500">Edad / Sexo</dt>
-            <dd>
+            <dt className="su-label">Edad / Sexo</dt>
+            <dd style={{ margin: "6px 0 0" }}>
               {patient.age ?? "—"} / {patient.sex ?? "—"}
             </dd>
           </div>
           <div>
-            <dt className="text-slate-500">Peso / Talla</dt>
-            <dd>
+            <dt className="su-label">Peso / Talla</dt>
+            <dd style={{ margin: "6px 0 0" }}>
               {patient.weightKg ?? "—"} kg / {patient.heightCm ?? "—"} cm
             </dd>
           </div>
-          <div className="sm:col-span-2">
-            <dt className="text-slate-500">Objetivo</dt>
-            <dd>{patient.goal ?? "—"}</dd>
+          <div style={{ gridColumn: "1 / -1" }}>
+            <dt className="su-label">Objetivo</dt>
+            <dd style={{ margin: "6px 0 0" }}>{patient.goal ?? "—"}</dd>
           </div>
         </dl>
-        <div className="mt-4 flex gap-2">
+        <div style={{ marginTop: 18, display: "flex", gap: 8, flexWrap: "wrap" }}>
           <Link
             href={`/nutriologo/pacientes/${patient.id}/plan-nuevo`}
-            className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm text-white"
+            className="su-btn su-btn--primary"
           >
-            Nuevo plan
+            + Nuevo plan
           </Link>
-          <Link
-            href={`/nutriologo/chat/${patient.user.id}`}
-            className="rounded-md border border-slate-200 px-3 py-1.5 text-sm"
-          >
+          <Link href={`/nutriologo/chat/${patient.user.id}`} className="su-btn su-btn--secondary">
             Chat
           </Link>
         </div>
       </div>
 
-      <section className="space-y-3">
-        <h3 className="font-semibold">Historial de planes</h3>
+      <section className="su-stack">
+        <p className="su-label">Historial de planes</p>
         {patient.plans.map((plan) => {
           const totals = roundTotals(
             calculatePlanTotals(plan.slots.flatMap((s) => s.items)),
           );
           return (
-            <article
-              key={plan.id}
-              className="space-y-3 rounded-xl border border-slate-200 bg-white p-4"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
+            <article key={plan.id} className="su-card su-stack">
+              <div className="su-row">
                 <div>
-                  <p className="font-medium">{plan.title}</p>
-                  <p className="text-xs text-slate-500">
-                    Estado: {plan.status} · {new Date(plan.createdAt).toLocaleString("es-AR")}
+                  <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
+                  <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--su-ink-muted)" }}>
+                    {plan.status} · {new Date(plan.createdAt).toLocaleString("es-AR")}
                   </p>
+                  <div style={{ marginTop: 8 }}>
+                    {plan.status === "ACTIVE" ? (
+                      <span className="su-badge">Activo</span>
+                    ) : (
+                      <span className="su-badge su-badge--3">{plan.status}</span>
+                    )}
+                  </div>
                 </div>
-                <div className="flex gap-2">
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   <Link
                     href={`/nutriologo/planes/${plan.id}`}
-                    className="rounded-md border px-3 py-1 text-sm"
+                    className="su-btn su-btn--secondary"
                   >
                     Detalle
                   </Link>
@@ -104,9 +118,9 @@ export default async function PatientDetailPage({ params }: Props) {
               </div>
               <TotalsBadge totals={totals} />
               {plan.exchanges.length > 0 ? (
-                <div className="text-xs text-slate-600">
-                  <p className="mb-1 font-medium">Últimos intercambios</p>
-                  <ul className="space-y-1">
+                <div>
+                  <p className="su-label">Últimos intercambios</p>
+                  <ul style={{ margin: "8px 0 0", paddingLeft: 18, fontSize: 13 }}>
                     {plan.exchanges.map((ex) => (
                       <li key={ex.id}>
                         {ex.user.name}: {ex.fromFood.name} → {ex.toFood.name} (

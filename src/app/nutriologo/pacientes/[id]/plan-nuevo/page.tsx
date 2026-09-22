@@ -22,10 +22,13 @@ export default async function NewPlanPage({ params }: Props) {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="su-stack">
       <div>
-        <h2 className="text-xl font-semibold">Nuevo plan SMAE</h2>
-        <p className="text-sm text-slate-600">Paciente: {patient.user.name}</p>
+        <p className="su-label">Diseño</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          Nuevo plan SMAE
+        </h2>
+        <p className="su-subtitle">Paciente: {patient.user.name}</p>
       </div>
       <PlanBuilder patientId={patient.id} foods={foods} />
     </div>

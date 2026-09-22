@@ -60,18 +60,27 @@ export function ExchangeControls({
 
   if (options.length === 0) {
     return (
-      <p className="mt-2 text-xs text-slate-500">
+      <p style={{ marginTop: 10, fontSize: 13, color: "var(--su-ink-muted)" }}>
         No hay otros equivalentes disponibles en este grupo.
       </p>
     );
   }
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-2">
+    <div
+      style={{
+        marginTop: 12,
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 8,
+        alignItems: "center",
+      }}
+    >
       <select
         value={toFoodId}
         onChange={(e) => setToFoodId(e.target.value)}
-        className="min-w-[220px] flex-1 rounded-md border border-slate-200 px-2 py-1.5 text-sm"
+        className="su-field"
+        style={{ minWidth: 220, flex: 1 }}
       >
         {options.map((f) => (
           <option key={f.id} value={f.id}>
@@ -83,11 +92,13 @@ export function ExchangeControls({
         type="button"
         onClick={exchange}
         disabled={loading}
-        className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm text-white disabled:opacity-60"
+        className="su-btn su-btn--primary"
       >
-        {loading ? "Cambiando…" : "Cambiar por equivalente"}
+        {loading ? "Cambiando…" : "Cambiar equivalente"}
       </button>
-      {error ? <p className="w-full text-xs text-red-600">{error}</p> : null}
+      {error ? (
+        <p style={{ width: "100%", color: "var(--su-danger)", fontSize: 13 }}>{error}</p>
+      ) : null}
     </div>
   );
 }

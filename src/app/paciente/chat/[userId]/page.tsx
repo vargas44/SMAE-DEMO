@@ -19,10 +19,13 @@ export default async function PacienteChatPage({ params }: Props) {
   if (!other) notFound();
 
   return (
-    <div className="space-y-4">
+    <div className="su-stack">
       <div>
-        <h2 className="text-xl font-semibold">Chat con {other.name}</h2>
-        <p className="text-sm text-slate-600">Mensajería simple de la demo.</p>
+        <p className="su-label">Mensajes</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          Chat con {other.name}
+        </h2>
+        <p className="su-subtitle">Mensajería simple de la demo.</p>
       </div>
       <ChatBox withUserId={other.id} />
     </div>

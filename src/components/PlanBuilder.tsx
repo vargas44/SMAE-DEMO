@@ -156,28 +156,31 @@ export function PlanBuilder({
   }
 
   return (
-    <div className="space-y-5">
-      <div className="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:grid-cols-2">
-        <label className="text-sm sm:col-span-2">
-          <span className="mb-1 block text-slate-600">Título</span>
+    <div className="su-stack">
+      <div className="su-card" style={{ display: "grid", gap: 12 }}>
+        <label>
+          <span className="su-label">Título</span>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2"
+            className="su-field"
+            style={{ marginTop: 8 }}
           />
         </label>
-        <label className="text-sm sm:col-span-2">
-          <span className="mb-1 block text-slate-600">Notas</span>
+        <label>
+          <span className="su-label">Notas</span>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2"
+            className="su-field"
+            style={{ marginTop: 8 }}
             rows={2}
           />
         </label>
-        <label className="flex items-center gap-2 text-sm">
+        <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
           <input
             type="checkbox"
+            className="su-check"
             checked={activate}
             onChange={(e) => setActivate(e.target.checked)}
           />
@@ -187,13 +190,13 @@ export function PlanBuilder({
 
       <TotalsBadge totals={totals} />
 
-      <div className="flex flex-wrap gap-2">
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {MEAL_SLOT_ORDER.map((type) => (
           <button
             key={type}
             type="button"
             onClick={() => addSlot(type)}
-            className="rounded-md border border-slate-200 bg-white px-3 py-1 text-xs"
+            className="su-btn su-btn--secondary"
           >
             + {MEAL_SLOT_LABELS[type]}
           </button>
@@ -201,16 +204,13 @@ export function PlanBuilder({
       </div>
 
       {slots.map((slot) => (
-        <section
-          key={slot.type}
-          className="space-y-3 rounded-xl border border-slate-200 bg-white p-4"
-        >
-          <div className="flex items-center justify-between">
-            <h3 className="font-medium">{MEAL_SLOT_LABELS[slot.type]}</h3>
+        <section key={slot.type} className="su-card su-stack">
+          <div className="su-row">
+            <h3 style={{ margin: 0, fontSize: 18 }}>{MEAL_SLOT_LABELS[slot.type]}</h3>
             <button
               type="button"
               onClick={() => addItem(slot.type)}
-              className="text-sm text-emerald-700"
+              className="su-btn su-btn--primary"
             >
               + Alimento
             </button>
@@ -220,14 +220,21 @@ export function PlanBuilder({
             return (
               <div
                 key={item.key}
-                className="grid gap-2 rounded-lg bg-slate-50 p-3 sm:grid-cols-[1fr_100px_auto]"
+                className="su-inset-box"
+                style={{
+                  borderRadius: 20,
+                  padding: 14,
+                  display: "grid",
+                  gap: 8,
+                  gridTemplateColumns: "1fr 100px auto",
+                }}
               >
                 <select
                   value={item.foodId}
                   onChange={(e) =>
                     updateItem(slot.type, item.key, { foodId: e.target.value })
                   }
-                  className="rounded-md border border-slate-200 px-2 py-1.5 text-sm"
+                  className="su-field"
                 >
                   {foods.map((f) => (
                     <option key={f.id} value={f.id}>
@@ -245,17 +252,24 @@ export function PlanBuilder({
                       servings: Number(e.target.value),
                     })
                   }
-                  className="rounded-md border border-slate-200 px-2 py-1.5 text-sm"
+                  className="su-field"
                 />
                 <button
                   type="button"
                   onClick={() => removeItem(slot.type, item.key)}
-                  className="text-sm text-red-600"
+                  className="su-btn su-btn--secondary"
                 >
                   Quitar
                 </button>
                 {food ? (
-                  <p className="text-xs text-slate-500 sm:col-span-3">
+                  <p
+                    style={{
+                      gridColumn: "1 / -1",
+                      margin: 0,
+                      fontSize: 13,
+                      color: "var(--su-ink-muted)",
+                    }}
+                  >
                     {food.energyKcal * item.servings} kcal · P{" "}
                     {food.proteinG * item.servings}g · L {food.lipidG * item.servings}g ·
                     HC {food.carbG * item.servings}g
@@ -265,17 +279,22 @@ export function PlanBuilder({
             );
           })}
           {slot.items.length === 0 ? (
-            <p className="text-sm text-slate-500">Sin alimentos en este tiempo.</p>
+            <p style={{ color: "var(--su-ink-muted)", margin: 0 }}>
+              Sin alimentos en este tiempo.
+            </p>
           ) : null}
         </section>
       ))}
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? (
+        <p style={{ color: "var(--su-danger)", fontWeight: 600 }}>{error}</p>
+      ) : null}
       <button
         type="button"
         onClick={save}
         disabled={saving}
-        className="rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-60"
+        className="su-btn su-btn--primary"
+        style={{ width: "fit-content", opacity: saving ? 0.7 : 1 }}
       >
         {saving ? "Guardando…" : "Guardar plan"}
       </button>

@@ -36,6 +36,29 @@ La aplicación digitaliza un catálogo SMAE, permite a un **nutriólogo** diseñ
 
 ---
 
+## UI — Soft UI (neumorfismo)
+
+La interfaz usa el kit **Soft UI**: superficie crema monócroma con profundidad por **doble sombra** (raised / inset / pressed) y acento **teal** `#004D54`.
+
+### Cambios de diseño incluidos
+- Tokens CSS Soft UI (`--su-*`) en `src/app/globals.css`
+- Tipografía **DM Sans**
+- Shell con topbar + navegación tipo **tabs** neumórficas
+- Botones pill (primary teal / secondary raised)
+- Inputs **inset**, cards raised, badges y barras de progreso soft
+- Login, paneles nutriólogo/paciente, catálogo, chat y diseñador de plan alineados al mismo sistema
+
+### Paleta principal
+
+| Token | Hex | Uso |
+| --- | --- | --- |
+| `--su-bg` / `--su-surface` | `#F5F2E8` | Fondo y superficies |
+| `--su-teal` | `#004D54` | CTA y acentos |
+| `--su-ink` | `#2C2C2C` | Texto principal |
+| `--su-ink-muted` | `#6B6B63` | Texto secundario |
+
+---
+
 ## Stack
 
 | Capa | Tecnología |
@@ -43,7 +66,8 @@ La aplicación digitaliza un catálogo SMAE, permite a un **nutriólogo** diseñ
 | Frontend + API | Next.js (App Router) |
 | Auth | Auth.js (NextAuth v5) |
 | Base de datos | Prisma + SQLite |
-| UI | React + Tailwind CSS |
+| UI | React + Tailwind CSS + Soft UI |
+| Tests | Vitest |
 
 ---
 
@@ -88,6 +112,8 @@ Abrí [http://localhost:3000](http://localhost:3000) en el navegador.
 | `npm run db:push` | Sincroniza el esquema Prisma con SQLite |
 | `npm run db:seed` | Carga usuarios, catálogo y un plan demo |
 | `npm run db:reset` | Recrea la DB y vuelve a sembrar datos |
+| `npm run test` | Ejecuta los tests (Vitest) |
+| `npm run test:watch` | Tests en modo watch |
 
 ---
 
@@ -114,15 +140,33 @@ El paciente principal (`paciente@demo.com`) ya tiene un **plan activo** cargado 
 
 ---
 
+## Tests
+
+La suite (27 tests) cubre:
+
+- Cálculo de macros / totales del plan (`calculatePlanTotals`)
+- Validación de intercambios SMAE (`validateExchange`)
+- Orden y etiquetas de tiempos de comida
+- RBAC de sesión (`requireSession` / `requireRole`)
+- API de intercambios, planes y catálogo (con mocks)
+
+```bash
+npm run test
+```
+
+---
+
 ## Estructura del proyecto
 
 ```
 smae-demo/
   prisma/           # Schema, seed y catálogo JSON
+  public/assets/    # Assets estáticos
   src/
     app/            # Páginas y Route Handlers (API)
-    components/     # UI reutilizable
+    components/     # UI Soft UI (AppShell, cards, forms)
     lib/            # Auth, Prisma y motor SMAE
+  vitest.config.ts  # Configuración de tests
 ```
 
 ---

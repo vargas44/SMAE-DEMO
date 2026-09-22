@@ -12,20 +12,26 @@ export default async function PacienteCatalogoPage() {
   });
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Catálogo SMAE</h2>
+    <div className="su-stack">
+      <div>
+        <p className="su-label">Consulta</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          Catálogo SMAE
+        </h2>
+      </div>
       {groups.map((group) => (
-        <details
-          key={group.id}
-          className="rounded-xl border border-slate-200 bg-white p-4"
-        >
-          <summary className="cursor-pointer font-medium">
-            {group.name} ({group.foods.length})
+        <details key={group.id} className="su-card">
+          <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 16 }}>
+            {group.name}{" "}
+            <span style={{ color: "var(--su-ink-muted)", fontWeight: 600, fontSize: 13 }}>
+              ({group.foods.length})
+            </span>
           </summary>
-          <ul className="mt-3 space-y-1 text-sm text-slate-700">
+          <ul style={{ marginTop: 14, paddingLeft: 18, color: "var(--su-ink-muted)" }}>
             {group.foods.map((f) => (
-              <li key={f.id}>
-                {f.name} — {f.portionLabel} · {f.energyKcal} kcal
+              <li key={f.id} style={{ marginBottom: 6 }}>
+                <strong style={{ color: "var(--su-ink)" }}>{f.name}</strong> —{" "}
+                {f.portionLabel} · {f.energyKcal} kcal
               </li>
             ))}
           </ul>

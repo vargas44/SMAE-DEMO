@@ -14,7 +14,7 @@ export default async function PacienteHomePage() {
     where: { userId: session.user.id },
   });
   if (!profile) {
-    return <p>No se encontró el perfil de paciente.</p>;
+    return <p style={{ color: "var(--su-ink-muted)" }}>No se encontró el perfil de paciente.</p>;
   }
 
   const plan = await prisma.mealPlan.findFirst({
@@ -28,9 +28,10 @@ export default async function PacienteHomePage() {
 
   if (!plan) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white p-6">
-        <h2 className="text-lg font-semibold">Sin plan activo</h2>
-        <p className="mt-2 text-sm text-slate-600">
+      <div className="su-card">
+        <p className="su-label">Plan</p>
+        <h2 style={{ margin: "8px 0 0" }}>Sin plan activo</h2>
+        <p style={{ marginTop: 10, color: "var(--su-ink-muted)" }}>
           Tu nutriólogo todavía no activó un plan SMAE.
         </p>
       </div>
@@ -47,32 +48,35 @@ export default async function PacienteHomePage() {
   });
 
   return (
-    <div className="space-y-5">
+    <div className="su-stack">
       <div>
-        <h2 className="text-xl font-semibold">{plan.title}</h2>
-        <p className="text-sm text-slate-600">
-          Podés intercambiar alimentos del mismo grupo SMAE sin romper las
-          raciones.
+        <p className="su-label">Plan activo</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          {plan.title}
+        </h2>
+        <p className="su-subtitle">
+          Intercambiá alimentos del mismo grupo SMAE sin romper las raciones.
         </p>
       </div>
       <TotalsBadge totals={totals} />
       {plan.slots.map((slot) => (
-        <section
-          key={slot.id}
-          className="space-y-3 rounded-xl border border-slate-200 bg-white p-4"
-        >
-          <h3 className="font-medium">
-            {slot.label || MEAL_SLOT_LABELS[slot.type]}
-          </h3>
+        <section key={slot.id} className="su-card su-stack">
+          <div className="su-row">
+            <h3 style={{ margin: 0, fontSize: 17 }}>
+              {slot.label || MEAL_SLOT_LABELS[slot.type]}
+            </h3>
+            <span className="su-badge">{slot.items.length} eq.</span>
+          </div>
           {slot.items.map((item) => (
             <div
               key={item.id}
-              className="rounded-lg border border-slate-100 bg-slate-50 p-3"
+              className="su-inset-box"
+              style={{ borderRadius: 12, padding: 14 }}
             >
-              <p className="text-sm font-medium">
+              <p style={{ margin: 0, fontWeight: 700 }}>
                 {item.servings} × {item.food.name}
               </p>
-              <p className="text-xs text-slate-500">
+              <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--su-ink-muted)" }}>
                 {item.food.group.name} · {item.food.portionLabel} ·{" "}
                 {item.food.energyKcal * item.servings} kcal
               </p>

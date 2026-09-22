@@ -52,13 +52,32 @@ export function AdherenceForm({
   }
 
   return (
-    <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-4">
-      <p className="text-sm text-slate-500">Fecha: {date}</p>
-      <div className="grid gap-2 sm:grid-cols-2">
+    <div className="su-card su-stack">
+      <p className="su-label">Fecha: {date}</p>
+      <div
+        style={{
+          display: "grid",
+          gap: 8,
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+        }}
+      >
         {fields.map(([key, label]) => (
-          <label key={key} className="flex items-center gap-2 text-sm">
+          <label
+            key={key}
+            className="su-raised-sm"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              borderRadius: 9999,
+              padding: "10px 14px",
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
             <input
               type="checkbox"
+              className="su-check"
               checked={state[key]}
               onChange={(e) =>
                 setState((prev) => ({ ...prev, [key]: e.target.checked }))
@@ -72,17 +91,20 @@ export function AdherenceForm({
         value={state.notes}
         onChange={(e) => setState((prev) => ({ ...prev, notes: e.target.value }))}
         placeholder="Notas (opcional)"
-        className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+        className="su-field"
         rows={2}
       />
       <button
         type="button"
         onClick={save}
-        className="rounded-lg bg-emerald-700 px-4 py-2 text-sm text-white"
+        className="su-btn su-btn--primary"
+        style={{ width: "fit-content" }}
       >
         Guardar adherencia
       </button>
-      {msg ? <p className="text-sm text-emerald-700">{msg}</p> : null}
+      {msg ? (
+        <p style={{ color: "var(--su-success)", fontWeight: 600 }}>{msg}</p>
+      ) : null}
     </div>
   );
 }

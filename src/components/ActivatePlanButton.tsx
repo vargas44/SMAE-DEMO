@@ -23,7 +23,7 @@ export function ActivatePlanButton({ planId }: { planId: string }) {
       type="button"
       onClick={activate}
       disabled={loading}
-      className="rounded-md bg-emerald-700 px-3 py-1 text-sm text-white disabled:opacity-60"
+      className="su-btn su-btn--primary"
     >
       {loading ? "Activando…" : "Activar"}
     </button>

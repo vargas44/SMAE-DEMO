@@ -1,4 +1,4 @@
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -28,13 +28,13 @@ export default async function PacienteLayout({
   }
 
   return (
-    <div className="min-h-screen">
-      <AppHeader
-        title={`Hola, ${session.user.name}`}
-        roleLabel="Panel paciente"
-        links={links}
-      />
-      <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
-    </div>
+    <AppShell
+      brand="SMAE"
+      title="Mi plan"
+      subtitle={`${session.user.name} · Panel paciente`}
+      links={links}
+    >
+      {children}
+    </AppShell>
   );
 }

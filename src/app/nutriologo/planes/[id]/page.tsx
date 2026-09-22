@@ -36,25 +36,27 @@ export default async function PlanDetailPage({ params }: Props) {
   );
 
   return (
-    <div className="space-y-5">
+    <div className="su-stack">
       <div>
-        <h2 className="text-xl font-semibold">{plan.title}</h2>
-        <p className="text-sm text-slate-500">
+        <p className="su-label">Detalle</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          {plan.title}
+        </h2>
+        <p className="su-subtitle">
           {plan.patient.user.name} · {plan.status}
         </p>
       </div>
       <TotalsBadge totals={totals} />
       {plan.slots.map((slot) => (
-        <section
-          key={slot.id}
-          className="rounded-xl border border-slate-200 bg-white p-4"
-        >
-          <h3 className="font-medium">{slot.label || MEAL_SLOT_LABELS[slot.type]}</h3>
-          <ul className="mt-2 space-y-1 text-sm">
+        <section key={slot.id} className="su-card">
+          <h3 style={{ margin: 0, fontSize: 17 }}>
+            {slot.label || MEAL_SLOT_LABELS[slot.type]}
+          </h3>
+          <ul style={{ marginTop: 12, paddingLeft: 18, fontSize: 14 }}>
             {slot.items.map((item) => (
-              <li key={item.id}>
+              <li key={item.id} style={{ marginBottom: 6 }}>
                 {item.servings} × {item.food.name}{" "}
-                <span className="text-slate-500">
+                <span style={{ color: "var(--su-ink-muted)" }}>
                   ({item.food.group.name} · {item.food.portionLabel})
                 </span>
               </li>
@@ -62,14 +64,16 @@ export default async function PlanDetailPage({ params }: Props) {
           </ul>
         </section>
       ))}
-      <section className="rounded-xl border border-slate-200 bg-white p-4">
-        <h3 className="font-medium">Log de intercambios</h3>
+      <section className="su-card">
+        <p className="su-label">Log de intercambios</p>
         {plan.exchanges.length === 0 ? (
-          <p className="mt-2 text-sm text-slate-500">Sin intercambios aún.</p>
+          <p style={{ marginTop: 10, color: "var(--su-ink-muted)" }}>
+            Sin intercambios aún.
+          </p>
         ) : (
-          <ul className="mt-2 space-y-1 text-sm">
+          <ul style={{ marginTop: 10, paddingLeft: 18, fontSize: 14 }}>
             {plan.exchanges.map((ex) => (
-              <li key={ex.id}>
+              <li key={ex.id} style={{ marginBottom: 6 }}>
                 {new Date(ex.createdAt).toLocaleString("es-AR")} — {ex.user.name}:{" "}
                 {ex.fromFood.name} → {ex.toFood.name}
               </li>

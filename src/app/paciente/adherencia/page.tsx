@@ -23,17 +23,18 @@ export default async function AdherencePage() {
   });
 
   return (
-    <div className="space-y-5">
+    <div className="su-stack">
       <div>
-        <h2 className="text-xl font-semibold">Adherencia diaria</h2>
-        <p className="text-sm text-slate-600">
-          Marcá los tiempos de comida que cumpliste hoy.
-        </p>
+        <p className="su-label">Seguimiento</p>
+        <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
+          Adherencia diaria
+        </h2>
+        <p className="su-subtitle">Marcá los tiempos de comida que cumpliste hoy.</p>
       </div>
       <AdherenceForm date={today} initial={todayRow} />
-      <section className="rounded-xl border border-slate-200 bg-white p-4">
-        <h3 className="font-medium">Historial reciente</h3>
-        <ul className="mt-2 space-y-1 text-sm">
+      <section className="su-card">
+        <p className="su-label">Historial reciente</p>
+        <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none" }} className="su-stack">
           {history.map((h) => {
             const done = [
               h.breakfast,
@@ -44,13 +45,14 @@ export default async function AdherencePage() {
               h.snack3,
             ].filter(Boolean).length;
             return (
-              <li key={h.id}>
-                {h.date}: {done}/6 tiempos
+              <li key={h.id} className="su-row">
+                <span>{h.date}</span>
+                <span className="su-badge">{done}/6 tiempos</span>
               </li>
             );
           })}
           {history.length === 0 ? (
-            <li className="text-slate-500">Sin registros aún.</li>
+            <li style={{ color: "var(--su-ink-muted)" }}>Sin registros aún.</li>
           ) : null}
         </ul>
       </section>
