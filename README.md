@@ -161,7 +161,6 @@ npm run test
 ```
 smae-demo/
   prisma/           # Schema, seed y catálogo JSON
-  public/assets/    # Assets estáticos
   src/
     app/            # Páginas y Route Handlers (API)
     components/     # UI Soft UI (AppShell, cards, forms)
