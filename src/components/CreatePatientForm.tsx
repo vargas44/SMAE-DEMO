@@ -53,8 +53,8 @@ export function CreatePatientForm() {
         }}
       >
         <input name="name" required placeholder="Nombre" className="su-field" />
-        <input name="email" type="email" required placeholder="Email" className="su-field" />
-        <input name="password" placeholder="Contraseña (default demo1234)" className="su-field" />
+        <input name="email" type="email" required placeholder="Correo electrónico" className="su-field" />
+        <input name="password" placeholder="Contraseña (por defecto demo1234)" className="su-field" />
         <input name="age" type="number" placeholder="Edad" className="su-field" />
         <input name="sex" placeholder="Sexo (M/F)" className="su-field" />
         <input name="weightKg" type="number" step="0.1" placeholder="Peso kg" className="su-field" />

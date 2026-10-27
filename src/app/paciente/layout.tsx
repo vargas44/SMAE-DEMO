@@ -23,7 +23,7 @@ export default async function PacienteLayout({
   if (profile) {
     links.push({
       href: `/paciente/chat/${profile.nutritionistId}`,
-      label: "Chat",
+      label: "Mensajes",
     });
   }
 

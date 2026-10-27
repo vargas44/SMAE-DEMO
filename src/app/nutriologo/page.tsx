@@ -57,7 +57,7 @@ export default async function NutriologoHomePage() {
       </section>
 
       <div>
-        <p className="su-label">My patients</p>
+        <p className="su-label">Mis pacientes</p>
         <h2 className="su-title" style={{ fontSize: "1.35rem", marginTop: 6 }}>
           Pacientes
         </h2>
@@ -94,7 +94,7 @@ export default async function NutriologoHomePage() {
                   + Nuevo plan
                 </Link>
                 <Link href={`/nutriologo/chat/${p.user.id}`} className="su-btn su-btn--secondary">
-                  Chat
+                  Mensajes
                 </Link>
               </div>
             </div>

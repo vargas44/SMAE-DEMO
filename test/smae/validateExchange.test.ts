@@ -51,10 +51,11 @@ describe("validateExchange", () => {
   });
 
   it("rechaza raciones inválidas", () => {
-    const result = validateExchange(manzana, pera, 0);
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.reason).toMatch(/raciones/i);
+    expect(validateExchange(manzana, pera, 0).ok).toBe(false);
+    const negativo = validateExchange(manzana, pera, -1);
+    expect(negativo.ok).toBe(false);
+    if (!negativo.ok) {
+      expect(negativo.reason).toMatch(/raciones/i);
     }
   });
 
@@ -76,5 +77,11 @@ describe("validateExchange", () => {
 
   it("acepta mismo grupo y mismo subtipo", () => {
     expect(validateExchange(pechugaBaja, claraBaja, 2)).toEqual({ ok: true });
+  });
+
+  it("trata null y undefined de subtipo como equivalentes", () => {
+    const a = { id: "a", groupId: "FRU", subtype: null };
+    const b = { id: "b", groupId: "FRU", subtype: undefined as unknown as null };
+    expect(validateExchange(a, { ...b, subtype: null }, 1)).toEqual({ ok: true });
   });
 });

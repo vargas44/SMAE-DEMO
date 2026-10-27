@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { TotalsBadge } from "@/components/TotalsBadge";
 import { calculatePlanTotals, roundTotals } from "@/lib/smae/calculate";
+import { PLAN_STATUS_LABELS } from "@/lib/smae/groups";
 import { ActivatePlanButton } from "@/components/ActivatePlanButton";
 
 type Props = { params: Promise<{ id: string }> };
@@ -77,7 +78,7 @@ export default async function PatientDetailPage({ params }: Props) {
             + Nuevo plan
           </Link>
           <Link href={`/nutriologo/chat/${patient.user.id}`} className="su-btn su-btn--secondary">
-            Chat
+            Mensajes
           </Link>
         </div>
       </div>
@@ -94,13 +95,13 @@ export default async function PatientDetailPage({ params }: Props) {
                 <div>
                   <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
                   <p style={{ margin: "4px 0 0", fontSize: 13, color: "var(--su-ink-muted)" }}>
-                    {plan.status} · {new Date(plan.createdAt).toLocaleString("es-AR")}
+                    {PLAN_STATUS_LABELS[plan.status]} · {new Date(plan.createdAt).toLocaleString("es-AR")}
                   </p>
                   <div style={{ marginTop: 8 }}>
                     {plan.status === "ACTIVE" ? (
                       <span className="su-badge">Activo</span>
                     ) : (
-                      <span className="su-badge su-badge--3">{plan.status}</span>
+                      <span className="su-badge su-badge--3">{PLAN_STATUS_LABELS[plan.status]}</span>
                     )}
                   </div>
                 </div>

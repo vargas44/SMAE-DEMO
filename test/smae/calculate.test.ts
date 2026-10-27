@@ -4,6 +4,7 @@ import {
   energyProgressPct,
   roundTotals,
 } from "@/lib/smae/calculate";
+import { validateExchange } from "@/lib/smae/validateExchange";
 
 const tortilla = {
   energyKcal: 70,
@@ -17,6 +18,13 @@ const pechuga = {
   proteinG: 7,
   lipidG: 1,
   carbG: 0,
+};
+
+const arroz = {
+  energyKcal: 70,
+  proteinG: 2,
+  lipidG: 0,
+  carbG: 15,
 };
 
 describe("calculatePlanTotals", () => {
@@ -71,6 +79,27 @@ describe("roundTotals", () => {
       servings: 1.3,
     });
   });
+
+  it("respeta la cantidad de decimales pedida", () => {
+    expect(
+      roundTotals(
+        {
+          energyKcal: 70.166,
+          proteinG: 2.044,
+          lipidG: 0.049,
+          carbG: 15.555,
+          servings: 1.249,
+        },
+        2,
+      ),
+    ).toEqual({
+      energyKcal: 70.17,
+      proteinG: 2.04,
+      lipidG: 0.05,
+      carbG: 15.56,
+      servings: 1.25,
+    });
+  });
 });
 
 describe("energyProgressPct", () => {
@@ -88,5 +117,25 @@ describe("energyProgressPct", () => {
     expect(energyProgressPct(1105, null)).toBe(0);
     expect(energyProgressPct(1105, 0)).toBe(0);
     expect(energyProgressPct(1105, undefined)).toBe(0);
+    expect(energyProgressPct(1105, -100)).toBe(0);
+  });
+});
+
+describe("invariante SMAE: intercambio válido no cambia totales", () => {
+  it("conserva energía y macros al cambiar tortilla por arroz (mismo grupo y raciones)", () => {
+    const from = { id: "cer-tortilla", groupId: "CER", subtype: null };
+    const to = { id: "cer-arroz", groupId: "CER", subtype: null };
+    expect(validateExchange(from, to, 2)).toEqual({ ok: true });
+
+    const antes = calculatePlanTotals([
+      { food: tortilla, servings: 2 },
+      { food: pechuga, servings: 1 },
+    ]);
+    const despues = calculatePlanTotals([
+      { food: arroz, servings: 2 },
+      { food: pechuga, servings: 1 },
+    ]);
+
+    expect(despues).toEqual(antes);
   });
 });

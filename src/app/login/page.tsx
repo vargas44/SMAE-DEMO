@@ -48,7 +48,7 @@ export default function LoginPage() {
             </div>
             <div>
               <p className="su-brand-name">SMAE Demo</p>
-              <p className="su-brand-sub">Soft UI kit</p>
+              <p className="su-brand-sub">Demo TFG</p>
             </div>
           </div>
           <p className="su-label">Trabajo final</p>
@@ -56,8 +56,8 @@ export default function LoginPage() {
             Equivalentes con profundidad suave
           </h1>
           <p className="su-subtitle">
-            Controles neumórficos (raised / inset) y acento teal para la demo
-            nutriólogo ↔ paciente.
+            Controles con relieve y hundido, y acento verde azulado, para la
+            demo entre nutriólogo y paciente.
           </p>
           <NutritionTipsCarousel />
         </section>
@@ -74,7 +74,7 @@ export default function LoginPage() {
             onSubmit={onSubmit}
           >
             <label>
-              <span className="su-label">Email</span>
+              <span className="su-label">Correo electrónico</span>
               <input
                 name="email"
                 type="email"
@@ -136,11 +136,11 @@ export default function LoginPage() {
               disabled={loading}
               className={`su-btn su-btn--primary${loading ? " is-loading" : ""}`}
             >
-              {loading ? "Sending…" : "Submit Now"}
+              {loading ? "Ingresando…" : "Ingresar"}
             </button>
           </form>
           <div className="su-inset-box" style={{ marginTop: 18, borderRadius: 12, padding: 14 }}>
-            <p className="su-label">Usuarios seed</p>
+            <p className="su-label">Usuarios de demostración</p>
             <p style={{ margin: "8px 0 0", fontSize: 14 }}>nutri@demo.com / demo1234</p>
             <p style={{ margin: 0, fontSize: 14 }}>paciente@demo.com / demo1234</p>
           </div>

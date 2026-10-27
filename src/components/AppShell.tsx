@@ -33,7 +33,7 @@ export function AppShell({
             </div>
             <div>
               <p className="su-brand-name">{brand}</p>
-              <p className="su-brand-sub">Soft UI · Demo TFG</p>
+              <p className="su-brand-sub">Demo TFG</p>
             </div>
           </div>
           <nav className="su-tabs" aria-label="Navegación principal">

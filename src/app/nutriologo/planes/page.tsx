@@ -8,6 +8,7 @@ import {
   energyProgressPct,
   roundTotals,
 } from "@/lib/smae/calculate";
+import { PLAN_STATUS_LABELS } from "@/lib/smae/groups";
 
 export default async function PlanesPage() {
   const session = await auth();
@@ -42,7 +43,7 @@ export default async function PlanesPage() {
               <div>
                 <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
                 <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
-                  {plan.patient.user.name} · {plan.status}
+                  {plan.patient.user.name} · {PLAN_STATUS_LABELS[plan.status]}
                 </p>
               </div>
               <Link href={`/nutriologo/planes/${plan.id}`} className="su-btn su-btn--primary">

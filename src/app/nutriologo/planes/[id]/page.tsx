@@ -7,7 +7,7 @@ import {
   energyProgressPct,
   roundTotals,
 } from "@/lib/smae/calculate";
-import { MEAL_SLOT_LABELS } from "@/lib/smae/groups";
+import { MEAL_SLOT_LABELS, PLAN_STATUS_LABELS } from "@/lib/smae/groups";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -49,7 +49,7 @@ export default async function PlanDetailPage({ params }: Props) {
           {plan.title}
         </h2>
         <p className="su-subtitle">
-          {plan.patient.user.name} · {plan.status} · meta {plan.targetKcal} kcal
+          {plan.patient.user.name} · {PLAN_STATUS_LABELS[plan.status]} · meta {plan.targetKcal} kcal
         </p>
       </div>
       <div className="su-card">
@@ -82,7 +82,7 @@ export default async function PlanDetailPage({ params }: Props) {
         </section>
       ))}
       <section className="su-card">
-        <p className="su-label">Log de intercambios</p>
+        <p className="su-label">Registro de intercambios</p>
         {plan.exchanges.length === 0 ? (
           <p style={{ marginTop: 10, color: "var(--su-ink-muted)" }}>
             Sin intercambios aún.

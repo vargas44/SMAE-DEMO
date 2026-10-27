@@ -30,7 +30,7 @@ export function TotalsBadge({
       muted: true,
     },
     {
-      label: "HC",
+      label: "Hidratos",
       value: totals.carbG,
       unit: "g",
       delay: "su-rise su-rise-3",

@@ -13,7 +13,7 @@ export default async function NutriologoLayout({
   return (
     <AppShell
       brand="SMAE"
-      title="Dashboard"
+      title="Panel"
       subtitle={`${session.user.name} · Panel nutriólogo`}
       links={[
         { href: "/nutriologo", label: "Pacientes" },

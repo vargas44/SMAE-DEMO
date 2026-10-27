@@ -46,9 +46,9 @@ export default async function CatalogoPage() {
                   <th style={{ textAlign: "left", padding: "12px 18px" }}>Alimento</th>
                   <th style={{ textAlign: "left", padding: "12px 18px" }}>Ración</th>
                   <th style={{ textAlign: "left", padding: "12px 18px" }}>kcal</th>
-                  <th style={{ textAlign: "left", padding: "12px 18px" }}>P</th>
-                  <th style={{ textAlign: "left", padding: "12px 18px" }}>L</th>
-                  <th style={{ textAlign: "left", padding: "12px 18px" }}>HC</th>
+                  <th style={{ textAlign: "left", padding: "12px 18px" }}>Proteína</th>
+                  <th style={{ textAlign: "left", padding: "12px 18px" }}>Lípidos</th>
+                  <th style={{ textAlign: "left", padding: "12px 18px" }}>Hidratos</th>
                 </tr>
               </thead>
               <tbody>

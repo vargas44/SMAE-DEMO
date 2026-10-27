@@ -4,9 +4,11 @@ import { Role } from "@prisma/client";
 
 const requireSession = vi.fn();
 const findFirstPatient = vi.fn();
+const findUniquePatient = vi.fn();
 const updateManyPlans = vi.fn();
 const createPlan = vi.fn();
 const findUniquePlan = vi.fn();
+const findManyPlans = vi.fn();
 
 vi.mock("@/lib/session", () => ({
   requireSession: (...args: unknown[]) => requireSession(...args),
@@ -16,16 +18,22 @@ vi.mock("@/lib/prisma", () => ({
   prisma: {
     patientProfile: {
       findFirst: (...args: unknown[]) => findFirstPatient(...args),
+      findUnique: (...args: unknown[]) => findUniquePatient(...args),
     },
     mealPlan: {
       updateMany: (...args: unknown[]) => updateManyPlans(...args),
       create: (...args: unknown[]) => createPlan(...args),
       findUnique: (...args: unknown[]) => findUniquePlan(...args),
+      findMany: (...args: unknown[]) => findManyPlans(...args),
     },
   },
 }));
 
-import { POST } from "@/app/api/plans/route";
+import { GET, POST } from "@/app/api/plans/route";
+
+function getPlans(query = "") {
+  return new NextRequest(`http://localhost/api/plans${query}`);
+}
 
 function postJson(body: unknown) {
   return new NextRequest("http://localhost/api/plans", {
@@ -120,5 +128,75 @@ describe("POST /api/plans", () => {
       }),
     );
     expect(res.status).toBe(400);
+  });
+});
+
+describe("GET /api/plans", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    findManyPlans.mockResolvedValue([
+      {
+        id: "plan-1",
+        title: "Plan demo",
+        slots: [
+          {
+            items: [
+              {
+                servings: 2,
+                food: { energyKcal: 70, proteinG: 2, lipidG: 0, carbG: 15 },
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("lista planes del nutriólogo con totales", async () => {
+    requireSession.mockResolvedValue({
+      user: { id: "nutri-1", role: Role.NUTRIOLOGO },
+    });
+
+    const res = await GET(getPlans("?patientId=patient-1&status=ACTIVE"));
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data[0].totals.energyKcal).toBe(140);
+    expect(findManyPlans).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          createdById: "nutri-1",
+          patientId: "patient-1",
+          status: "ACTIVE",
+        }),
+      }),
+    );
+  });
+
+  it("lista solo los planes del paciente autenticado", async () => {
+    requireSession.mockResolvedValue({
+      user: { id: "pac-1", role: Role.PACIENTE },
+    });
+    findUniquePatient.mockResolvedValue({ id: "patient-1", userId: "pac-1" });
+
+    const res = await GET(getPlans());
+    expect(res.status).toBe(200);
+    expect(findUniquePatient).toHaveBeenCalledWith({
+      where: { userId: "pac-1" },
+    });
+    expect(findManyPlans).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({ patientId: "patient-1" }),
+      }),
+    );
+  });
+
+  it("responde 404 si el paciente no tiene perfil", async () => {
+    requireSession.mockResolvedValue({
+      user: { id: "pac-1", role: Role.PACIENTE },
+    });
+    findUniquePatient.mockResolvedValue(null);
+
+    const res = await GET(getPlans());
+    expect(res.status).toBe(404);
   });
 });

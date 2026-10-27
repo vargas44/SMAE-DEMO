@@ -23,7 +23,7 @@ export default async function PacienteChatPage({ params }: Props) {
       <div>
         <p className="su-label">Mensajes</p>
         <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
-          Chat con {other.name}
+          Mensajes con {other.name}
         </h2>
         <p className="su-subtitle">Mensajería simple de la demo.</p>
       </div>

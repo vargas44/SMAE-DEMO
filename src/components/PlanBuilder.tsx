@@ -290,9 +290,9 @@ export function PlanBuilder({
                       color: "var(--su-ink-muted)",
                     }}
                   >
-                    {food.energyKcal * item.servings} kcal · P{" "}
-                    {food.proteinG * item.servings}g · L {food.lipidG * item.servings}g ·
-                    HC {food.carbG * item.servings}g
+                    {food.energyKcal * item.servings} kcal · proteína{" "}
+                    {food.proteinG * item.servings} g · lípidos {food.lipidG * item.servings} g
+                    · hidratos {food.carbG * item.servings} g
                   </p>
                 ) : null}
               </div>
