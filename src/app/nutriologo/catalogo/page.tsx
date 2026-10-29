@@ -39,8 +39,8 @@ export default async function CatalogoPage() {
               {group.foods.length} alimentos
             </p>
           </div>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+          <div className="su-table-scroll">
+            <table>
               <thead>
                 <tr className="su-label">
                   <th style={{ textAlign: "left", padding: "12px 18px" }}>Alimento</th>

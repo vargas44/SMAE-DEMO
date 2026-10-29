@@ -75,7 +75,7 @@ La interfaz usa el kit **Soft UI**: superficie crema monócroma con profundidad 
 | Auth | Auth.js (NextAuth v5) |
 | Base de datos | Prisma + SQLite |
 | UI | React + Tailwind CSS + Soft UI |
-| Tests | Vitest |
+| Tests | Vitest (unidad/API) y Playwright (navegador) |
 
 ---
 
@@ -128,8 +128,10 @@ En `next.config.ts` está `allowedDevOrigins` con la IP local (ej. `192.168.0.25
 | `npm run db:push` | Sincroniza el esquema Prisma con SQLite |
 | `npm run db:seed` | Carga usuarios, catálogo y un plan demo |
 | `npm run db:reset` | Recrea la DB y vuelve a sembrar datos |
-| `npm run test` | Ejecuta los tests (Vitest) |
-| `npm run test:watch` | Tests en modo watch |
+| `npm run test` | Tests de dominio y API (Vitest) |
+| `npm run test:watch` | Vitest en modo watch |
+| `npm run test:e2e` | Tests de interfaz en el navegador (Playwright) |
+| `npm run test:e2e:ui` | Playwright con interfaz gráfica |
 
 ---
 
@@ -158,7 +160,9 @@ El paciente principal (`paciente@demo.com`) ya tiene un **plan activo** (meta 18
 
 ## Tests
 
-La suite (~50 tests) cubre:
+### Vitest (dominio y API)
+
+La suite cubre:
 
 - Cálculo de macros / totales del plan (`calculatePlanTotals`)
 - Progreso energético vs meta (`energyProgressPct`)
@@ -170,6 +174,17 @@ La suite (~50 tests) cubre:
 ```bash
 npm run test
 ```
+
+### Playwright (navegador)
+
+Los tests E2E viven en `test/e2e/` y recorren el login como un usuario real. La primera vez, o en otra máquina, hay que bajar Chromium:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Hace falta `.env`, la base sembrada (`npm run db:seed`) y, si no hay un `npm run dev` ya corriendo, Playwright lo levanta solo.
 
 ---
 
@@ -187,7 +202,9 @@ smae-demo/
     app/            # Páginas, iconos Next y Route Handlers (API)
     components/     # UI Soft UI (AppShell, carrusel, forms)
     lib/            # Auth, Prisma y motor SMAE
-  vitest.config.ts  # Configuración de tests
+  test/             # Vitest (unidad/API) y Playwright (e2e)
+  playwright.config.ts
+  vitest.config.ts
 ```
 
 ---

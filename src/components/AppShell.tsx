@@ -20,11 +20,11 @@ export function AppShell({
   const pathname = usePathname();
 
   return (
-    <div className="su-page">
-      <div className="su-shell">
+    <div className="su-page" suppressHydrationWarning>
+      <div className="su-shell" suppressHydrationWarning>
         <header className="su-topbar">
           <div className="su-brand">
-            <div className="su-brand-mark" aria-hidden>
+            <div className="su-brand-mark" aria-hidden="true">
               <img
                 src="/assets/images/icons/logo.png"
                 alt=""

@@ -1,12 +1,17 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export function CreatePatientForm() {
   const router = useRouter();
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -16,7 +21,7 @@ export function CreatePatientForm() {
     const payload = {
       name: String(form.get("name")),
       email: String(form.get("email")),
-      password: String(form.get("password") || "demo1234"),
+      password: String(form.get("patientPassword") || "demo1234"),
       age: form.get("age") ? Number(form.get("age")) : undefined,
       sex: String(form.get("sex") || "") || undefined,
       weightKg: form.get("weightKg") ? Number(form.get("weightKg")) : undefined,
@@ -43,36 +48,55 @@ export function CreatePatientForm() {
     <section className="su-card">
       <p className="su-label">Altas</p>
       <h3 style={{ margin: "8px 0 0", fontSize: 20 }}>+ Nuevo paciente</h3>
-      <form
-        onSubmit={onSubmit}
-        style={{
-          marginTop: 18,
-          display: "grid",
-          gap: 12,
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-        }}
-      >
-        <input name="name" required placeholder="Nombre" className="su-field" />
-        <input name="email" type="email" required placeholder="Correo electrónico" className="su-field" />
-        <input name="password" placeholder="Contraseña (por defecto demo1234)" className="su-field" />
-        <input name="age" type="number" placeholder="Edad" className="su-field" />
-        <input name="sex" placeholder="Sexo (M/F)" className="su-field" />
-        <input name="weightKg" type="number" step="0.1" placeholder="Peso kg" className="su-field" />
-        <input name="heightCm" type="number" step="0.1" placeholder="Talla cm" className="su-field" />
-        <input
-          name="goal"
-          placeholder="Objetivo"
-          className="su-field"
-          style={{ gridColumn: "1 / -1" }}
-        />
-        <button
-          type="submit"
-          className="su-btn su-btn--primary"
-          style={{ gridColumn: "1 / -1", width: "fit-content" }}
+      {ready ? (
+        <form
+          onSubmit={onSubmit}
+          autoComplete="off"
+          style={{
+            marginTop: 18,
+            display: "grid",
+            gap: 12,
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          }}
         >
-          + Crear paciente
-        </button>
-      </form>
+          <input name="name" required placeholder="Nombre" className="su-field" autoComplete="name" />
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Correo electrónico"
+            className="su-field"
+            autoComplete="off"
+          />
+          <input
+            name="patientPassword"
+            placeholder="Contraseña (por defecto demo1234)"
+            className="su-field"
+            autoComplete="new-password"
+          />
+          <input name="age" type="number" placeholder="Edad" className="su-field" />
+          <input name="sex" placeholder="Sexo (M/F)" className="su-field" />
+          <input name="weightKg" type="number" step="0.1" placeholder="Peso kg" className="su-field" />
+          <input name="heightCm" type="number" step="0.1" placeholder="Talla cm" className="su-field" />
+          <input
+            name="goal"
+            placeholder="Objetivo"
+            className="su-field"
+            style={{ gridColumn: "1 / -1" }}
+          />
+          <button
+            type="submit"
+            className="su-btn su-btn--primary"
+            style={{ gridColumn: "1 / -1" }}
+          >
+            + Crear paciente
+          </button>
+        </form>
+      ) : (
+        <p style={{ marginTop: 18, color: "var(--su-ink-muted)", fontSize: 14 }}>
+          Cargando formulario…
+        </p>
+      )}
       {error ? (
         <p style={{ marginTop: 12, color: "var(--su-danger)", fontWeight: 600 }}>{error}</p>
       ) : null}

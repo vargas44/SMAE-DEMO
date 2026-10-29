@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
@@ -8,6 +8,12 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "SMAE Demo — Trabajo Final",
@@ -21,8 +27,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${dmSans.variable} h-full antialiased`}>
-      <body className="min-h-full">
+    <html
+      lang="es"
+      className={`${dmSans.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full" suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>

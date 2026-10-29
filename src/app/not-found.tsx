@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="su-page" style={{ display: "grid", placeItems: "center" }}>
+    <div className="su-page" style={{ display: "grid", placeItems: "center" }} suppressHydrationWarning>
       <section className="su-card" style={{ maxWidth: 420 }}>
         <p className="su-label">Error 404</p>
         <h1 className="su-title" style={{ marginTop: 8 }}>

@@ -70,7 +70,7 @@ export default async function PatientDetailPage({ params }: Props) {
             <dd style={{ margin: "6px 0 0" }}>{patient.goal ?? "—"}</dd>
           </div>
         </dl>
-        <div style={{ marginTop: 18, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="su-actions" style={{ marginTop: 18 }}>
           <Link
             href={`/nutriologo/pacientes/${patient.id}/plan-nuevo`}
             className="su-btn su-btn--primary"
@@ -105,7 +105,7 @@ export default async function PatientDetailPage({ params }: Props) {
                     )}
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <div className="su-actions">
                   <Link
                     href={`/nutriologo/planes/${plan.id}`}
                     className="su-btn su-btn--secondary"

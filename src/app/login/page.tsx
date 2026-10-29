@@ -35,11 +35,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="su-page su-page--login" style={{ display: "grid", placeItems: "center" }}>
+    <div
+      className="su-page su-page--login"
+      style={{ display: "grid", placeItems: "center" }}
+      suppressHydrationWarning
+    >
       <div className="su-auth-grid">
         <section className="su-card su-raised-lg su-rise">
           <div className="su-brand" style={{ marginBottom: 18 }}>
-            <div className="su-brand-mark" aria-hidden>
+            <div className="su-brand-mark" aria-hidden="true">
               <img
                 src="/assets/images/icons/logo.png"
                 alt=""

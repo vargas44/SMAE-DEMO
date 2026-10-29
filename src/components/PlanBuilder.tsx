@@ -240,13 +240,10 @@ export function PlanBuilder({
             return (
               <div
                 key={item.key}
-                className="su-inset-box"
+                className="su-inset-box su-plan-item-row"
                 style={{
                   borderRadius: 20,
                   padding: 14,
-                  display: "grid",
-                  gap: 8,
-                  gridTemplateColumns: "1fr 100px auto",
                 }}
               >
                 <select

@@ -36,24 +36,24 @@
   --su-r-pill: 9999px;
 
   --su-elev-2:
-    3px 3px 8px var(--su-shadow-dark),
-    -3px -3px 8px var(--su-shadow-light);
+    2px 3px 8px color-mix(in srgb, var(--su-shadow-dark) 70%, transparent),
+    -1px -1px 4px rgb(255 255 255 / 0.22);
   --su-elev-3:
-    6px 6px 14px var(--su-shadow-dark),
-    -6px -6px 14px var(--su-shadow-light);
+    3px 5px 12px color-mix(in srgb, var(--su-shadow-dark) 78%, transparent),
+    -2px -2px 6px rgb(255 255 255 / 0.2);
   --su-elev-4:
-    10px 10px 22px var(--su-shadow-dark),
-    -8px -8px 18px var(--su-shadow-light);
+    5px 8px 16px color-mix(in srgb, var(--su-shadow-dark) 82%, transparent),
+    -2px -2px 8px rgb(255 255 255 / 0.18);
   --su-elev-5:
-    16px 16px 36px rgba(44, 44, 44, 0.18),
-    -10px -10px 24px var(--su-shadow-light);
+    8px 12px 24px rgba(44, 44, 44, 0.12),
+    -3px -3px 10px rgb(255 255 255 / 0.16);
 
   --su-inset:
-    inset 4px 4px 10px var(--su-shadow-dark),
-    inset -4px -4px 10px var(--su-shadow-light);
+    inset 2px 2px 6px color-mix(in srgb, var(--su-shadow-dark) 85%, transparent),
+    inset -1px -1px 4px rgb(255 255 255 / 0.28);
   --su-pressed:
-    inset 6px 6px 12px var(--su-shadow-dark),
-    inset -3px -3px 8px var(--su-shadow-light);
+    inset 3px 3px 8px color-mix(in srgb, var(--su-shadow-dark) 90%, transparent),
+    inset -1px -1px 3px rgb(255 255 255 / 0.2);
 
   --su-focus-ring: 0 0 0 3px color-mix(in srgb, var(--su-teal) 28%, transparent);
 
@@ -86,13 +86,11 @@ body {
 
 .su-page {
   min-height: 100vh;
-  background: transparent;
   color: var(--su-ink);
   font-family: var(--su-font);
   padding: 28px 20px 40px;
-}
-
-.su-page--login {
+  /* Foto de fondo en toda la app (la misma del login).
+     Para quitarla: dejá solo `background: var(--su-bg);` en este bloque. */
   background-color: var(--su-bg);
   background-image:
     linear-gradient(
@@ -190,7 +188,7 @@ body {
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+  transition: box-shadow 280ms ease, color 280ms ease, background 280ms ease;
 }
 
 .su-tab.is-active {
@@ -319,7 +317,7 @@ body {
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: background 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+  transition: background 280ms ease, box-shadow 280ms ease, transform 280ms ease;
 }
 
 .su-btn--primary {
@@ -343,7 +341,7 @@ body {
 }
 
 .su-btn--secondary:hover {
-  box-shadow: var(--su-elev-3);
+  box-shadow: var(--su-inset);
 }
 
 .su-btn:disabled {
@@ -570,11 +568,11 @@ select.su-field {
 .su-list-item {
   padding: 14px 16px;
   border-radius: var(--su-r-4);
-  transition: box-shadow 160ms ease, background 160ms ease;
+  transition: box-shadow 320ms ease;
 }
 
 .su-list-item:hover {
-  box-shadow: var(--su-inset);
+  box-shadow: var(--su-pressed);
 }
 
 .su-auth-grid {
@@ -616,6 +614,131 @@ select.su-field {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.su-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.su-exchange {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.su-plan-item-row {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) 100px auto;
+}
+
+.su-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.su-table-scroll table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .su-page {
+    padding: 14px 12px 28px;
+    background-attachment: scroll;
+  }
+
+  .su-page--login {
+    padding: 16px 14px 32px;
+  }
+
+  .su-topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 14px 16px;
+  }
+
+  .su-topbar > form {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .su-tabs {
+    grid-column: 1 / -1;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .su-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .su-tab {
+    flex: 1 0 auto;
+    justify-content: center;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .su-title {
+    font-size: 1.45rem;
+  }
+
+  .su-card {
+    padding: 16px;
+  }
+
+  .su-grid-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .su-list-item .su-row {
+    align-items: stretch;
+  }
+
+  .su-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .su-actions .su-btn,
+  .su-topbar .su-btn {
+    width: 100%;
+  }
+
+  .su-exchange {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .su-exchange .su-field,
+  .su-exchange .su-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .su-plan-item-row {
+    grid-template-columns: 1fr;
+  }
+
+  .su-btn {
+    max-width: 100%;
   }
 }
 

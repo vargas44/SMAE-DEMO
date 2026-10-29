@@ -83,7 +83,7 @@ export default async function NutriologoHomePage() {
                   {p.goal ? <span className="su-badge su-badge--3">{p.goal}</span> : null}
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="su-actions">
                 <Link href={`/nutriologo/pacientes/${p.id}`} className="su-btn su-btn--primary">
                   Ver ficha
                 </Link>

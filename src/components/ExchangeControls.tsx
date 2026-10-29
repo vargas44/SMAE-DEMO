@@ -67,20 +67,11 @@ export function ExchangeControls({
   }
 
   return (
-    <div
-      style={{
-        marginTop: 12,
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 8,
-        alignItems: "center",
-      }}
-    >
+    <div className="su-exchange">
       <select
         value={toFoodId}
         onChange={(e) => setToFoodId(e.target.value)}
         className="su-field"
-        style={{ minWidth: 220, flex: 1 }}
       >
         {options.map((f) => (
           <option key={f.id} value={f.id}>
