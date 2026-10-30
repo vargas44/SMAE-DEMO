@@ -9,6 +9,8 @@ import {
   roundTotals,
 } from "@/lib/smae/calculate";
 import { PLAN_STATUS_LABELS } from "@/lib/smae/groups";
+import { EmptyState } from "@/components/EmptyState";
+import { SuAvatar } from "@/components/SuAvatar";
 
 export default async function PlanesPage() {
   const session = await auth();
@@ -31,6 +33,15 @@ export default async function PlanesPage() {
           Historial
         </h2>
       </div>
+      {plans.length === 0 ? (
+        <div className="su-card">
+          <EmptyState title="Todavía no hay planes">
+            <p style={{ margin: 0 }}>
+              Abrí la ficha de un paciente y creá el primero desde ahí.
+            </p>
+          </EmptyState>
+        </div>
+      ) : null}
       {plans.map((plan) => {
         const totals = roundTotals(
           calculatePlanTotals(plan.slots.flatMap((s) => s.items)),
@@ -40,11 +51,14 @@ export default async function PlanesPage() {
         return (
           <article key={plan.id} className="su-card su-stack">
             <div className="su-row">
-              <div>
-                <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
-                <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
-                  {plan.patient.user.name} · {PLAN_STATUS_LABELS[plan.status]}
-                </p>
+              <div className="su-person">
+                <SuAvatar name={plan.patient.user.name} />
+                <div>
+                  <p style={{ margin: 0, fontWeight: 700, fontSize: 17 }}>{plan.title}</p>
+                  <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
+                    {plan.patient.user.name} · {PLAN_STATUS_LABELS[plan.status]}
+                  </p>
+                </div>
               </div>
               <Link href={`/nutriologo/planes/${plan.id}`} className="su-btn su-btn--primary">
                 Abrir

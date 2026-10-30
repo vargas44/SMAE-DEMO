@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { CreatePatientForm } from "@/components/CreatePatientForm";
+import { EmptyState } from "@/components/EmptyState";
+import { SuAvatar } from "@/components/SuAvatar";
 
 export default async function NutriologoHomePage() {
   const session = await auth();
@@ -67,20 +69,23 @@ export default async function NutriologoHomePage() {
         {patients.map((p) => (
           <article key={p.id} className="su-card su-list-item">
             <div className="su-row">
-              <div>
-                <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>
-                  {p.user.name}
-                </h3>
-                <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
-                  {p.user.email}
-                </p>
-                <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
-                  {p.plans[0] ? (
-                    <span className="su-badge">Plan activo</span>
-                  ) : (
-                    <span className="su-badge su-badge--2">Sin plan</span>
-                  )}
-                  {p.goal ? <span className="su-badge su-badge--3">{p.goal}</span> : null}
+              <div className="su-person">
+                <SuAvatar name={p.user.name} />
+                <div>
+                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>
+                    {p.user.name}
+                  </h3>
+                  <p style={{ margin: "4px 0 0", color: "var(--su-ink-muted)", fontSize: 14 }}>
+                    {p.user.email}
+                  </p>
+                  <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+                    {p.plans[0] ? (
+                      <span className="su-badge">Plan activo</span>
+                    ) : (
+                      <span className="su-badge su-badge--2">Sin plan</span>
+                    )}
+                    {p.goal ? <span className="su-badge su-badge--3">{p.goal}</span> : null}
+                  </div>
                 </div>
               </div>
               <div className="su-actions">
@@ -101,7 +106,13 @@ export default async function NutriologoHomePage() {
           </article>
         ))}
         {patients.length === 0 ? (
-          <p style={{ color: "var(--su-ink-muted)" }}>Todavía no hay pacientes.</p>
+          <div className="su-card">
+            <EmptyState title="Todavía no hay pacientes">
+              <p style={{ margin: 0 }}>
+                Creá el primero con el formulario de abajo para empezar un plan SMAE.
+              </p>
+            </EmptyState>
+          </div>
         ) : null}
       </div>
 

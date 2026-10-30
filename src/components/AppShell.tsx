@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { SignOutButton } from "@/components/SignOutButton";
 
@@ -18,11 +19,16 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   return (
     <div className="su-page" suppressHydrationWarning>
       <div className="su-shell" suppressHydrationWarning>
-        <header className="su-topbar">
+        <header className="su-topbar" suppressHydrationWarning>
           <div className="su-brand">
             <div className="su-brand-mark" aria-hidden="true">
               <img
@@ -43,18 +49,29 @@ export function AppShell({
                 (link.href !== "/nutriologo" &&
                   link.href !== "/paciente" &&
                   pathname.startsWith(`${link.href}/`));
+              const className = `su-tab${active ? " is-active" : ""}`;
+              if (!ready) {
+                return (
+                  <span key={link.href} className={className}>
+                    {link.label}
+                  </span>
+                );
+              }
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`su-tab${active ? " is-active" : ""}`}
+                  className={className}
+                  suppressHydrationWarning
                 >
                   {link.label}
                 </Link>
               );
             })}
           </nav>
-          <SignOutButton />
+          {ready ? <SignOutButton /> : (
+            <span className="su-btn su-btn--primary">Salir</span>
+          )}
         </header>
 
         <div className="su-main">

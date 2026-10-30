@@ -1,19 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { SMAE_FOODS } from "./data/smae-foods";
 
 const prisma = new PrismaClient();
-
-type FoodSeed = {
-  name: string;
-  portionLabel: string;
-  energyKcal: number;
-  proteinG: number;
-  lipidG: number;
-  carbG: number;
-  subtype?: string;
-};
 
 const GROUP_META: Record<string, { code: string; name: string; description: string }> = {
   vegetales: {
@@ -81,14 +70,8 @@ async function main() {
   await prisma.patientProfile.deleteMany();
   await prisma.user.deleteMany();
 
-  const foodsPath = join(__dirname, "data", "smae-foods.json");
-  const foodsData = JSON.parse(readFileSync(foodsPath, "utf-8")) as Record<
-    string,
-    FoodSeed[]
-  >;
-
   console.log("Sembrando catálogo SMAE...");
-  for (const [key, foods] of Object.entries(foodsData)) {
+  for (const [key, foods] of Object.entries(SMAE_FOODS)) {
     const meta = GROUP_META[key];
     if (!meta) continue;
 
@@ -174,8 +157,8 @@ async function main() {
   const nopal = await prisma.food.findFirst({ where: { name: "Nopales cocidos" } });
   const manzana = await prisma.food.findFirst({ where: { name: "Manzana" } });
   const leche = await prisma.food.findFirst({ where: { name: "Leche descremada" } });
-  const aguacate = await prisma.food.findFirst({ where: { name: "Aguacate" } });
-  const frijol = await prisma.food.findFirst({ where: { name: "Frijol cocido" } });
+  const aguacate = await prisma.food.findFirst({ where: { name: "Palta" } }); // MX: Aguacate
+  const frijol = await prisma.food.findFirst({ where: { name: "Porotos cocidos" } }); // MX: Frijol cocido
 
   if (tortilla && pechuga && nopal && manzana && leche && aguacate && frijol) {
     console.log("Creando plan demo activo...");

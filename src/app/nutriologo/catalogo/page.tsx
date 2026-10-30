@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { EquivalentAveragesTable } from "@/components/EquivalentAveragesTable";
 
 export default async function CatalogoPage() {
   const session = await auth();
@@ -22,6 +23,7 @@ export default async function CatalogoPage() {
           Subconjunto demo digitalizado para la defensa del TFG.
         </p>
       </div>
+      <EquivalentAveragesTable groups={groups} />
       {groups.map((group) => (
         <section key={group.id} className="su-card" style={{ overflow: "hidden", padding: 0 }}>
           <div
@@ -31,10 +33,7 @@ export default async function CatalogoPage() {
               color: "var(--su-white)",
             }}
           >
-            <h3 style={{ margin: 0, fontSize: 17 }}>
-              {group.name}{" "}
-              <span style={{ opacity: 0.85, fontSize: 13 }}>({group.code})</span>
-            </h3>
+            <h3 style={{ margin: 0, fontSize: 17 }}>{group.name}</h3>
             <p style={{ margin: "4px 0 0", fontSize: 12, opacity: 0.85 }}>
               {group.foods.length} alimentos
             </p>

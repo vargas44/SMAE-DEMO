@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { PlanPlate } from "@/components/PlanPlate";
 import { TotalsBadge } from "@/components/TotalsBadge";
 import {
   calculatePlanTotals,
@@ -8,6 +9,7 @@ import {
   roundTotals,
 } from "@/lib/smae/calculate";
 import { MEAL_SLOT_LABELS, PLAN_STATUS_LABELS } from "@/lib/smae/groups";
+import { SuCrumb } from "@/components/SuCrumb";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -43,6 +45,13 @@ export default async function PlanDetailPage({ params }: Props) {
 
   return (
     <div className="su-stack">
+      <SuCrumb
+        items={[
+          { href: "/nutriologo/planes", label: "Planes" },
+          { href: `/nutriologo/pacientes/${plan.patient.id}`, label: plan.patient.user.name },
+          { label: plan.title },
+        ]}
+      />
       <div>
         <p className="su-label">Detalle</p>
         <h2 className="su-title" style={{ fontSize: "1.45rem", marginTop: 6 }}>
@@ -64,6 +73,7 @@ export default async function PlanDetailPage({ params }: Props) {
         </div>
       </div>
       <TotalsBadge totals={totals} />
+      <PlanPlate items={plan.slots.flatMap((s) => s.items)} />
       {plan.slots.map((slot) => (
         <section key={slot.id} className="su-card">
           <h3 style={{ margin: 0, fontSize: 17 }}>

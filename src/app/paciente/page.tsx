@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { PlanPlate } from "@/components/PlanPlate";
 import { TotalsBadge } from "@/components/TotalsBadge";
 import { calculatePlanTotals, roundTotals } from "@/lib/smae/calculate";
 import { MEAL_SLOT_LABELS } from "@/lib/smae/groups";
 import { ExchangeControls } from "@/components/ExchangeControls";
+import { EmptyState } from "@/components/EmptyState";
 
 export default async function PacienteHomePage() {
   const session = await auth();
@@ -29,11 +31,11 @@ export default async function PacienteHomePage() {
   if (!plan) {
     return (
       <div className="su-card">
-        <p className="su-label">Plan</p>
-        <h2 style={{ margin: "8px 0 0" }}>Sin plan activo</h2>
-        <p style={{ marginTop: 10, color: "var(--su-ink-muted)" }}>
-          Tu nutriólogo todavía no activó un plan SMAE.
-        </p>
+        <EmptyState title="Sin plan activo">
+          <p style={{ margin: 0 }}>
+            Tu nutriólogo todavía no activó un plan SMAE.
+          </p>
+        </EmptyState>
       </div>
     );
   }
@@ -59,6 +61,7 @@ export default async function PacienteHomePage() {
         </p>
       </div>
       <TotalsBadge totals={totals} />
+      <PlanPlate items={plan.slots.flatMap((s) => s.items)} />
       {plan.slots.map((slot) => (
         <section key={slot.id} className="su-card su-stack">
           <div className="su-row">

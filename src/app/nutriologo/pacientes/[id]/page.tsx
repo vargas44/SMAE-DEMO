@@ -6,6 +6,9 @@ import { TotalsBadge } from "@/components/TotalsBadge";
 import { calculatePlanTotals, roundTotals } from "@/lib/smae/calculate";
 import { PLAN_STATUS_LABELS } from "@/lib/smae/groups";
 import { ActivatePlanButton } from "@/components/ActivatePlanButton";
+import { EmptyState } from "@/components/EmptyState";
+import { SuAvatar } from "@/components/SuAvatar";
+import { SuCrumb } from "@/components/SuCrumb";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -40,10 +43,21 @@ export default async function PatientDetailPage({ params }: Props) {
 
   return (
     <div className="su-stack">
+      <SuCrumb
+        items={[
+          { href: "/nutriologo", label: "Pacientes" },
+          { label: patient.user.name },
+        ]}
+      />
       <div className="su-card">
         <p className="su-label">Ficha</p>
-        <h2 style={{ margin: "8px 0 0", fontSize: 24 }}>{patient.user.name}</h2>
-        <p style={{ marginTop: 4, color: "var(--su-ink-muted)" }}>{patient.user.email}</p>
+        <div className="su-person" style={{ marginTop: 10 }}>
+          <SuAvatar name={patient.user.name} />
+          <div>
+            <h2 style={{ margin: 0, fontSize: 24 }}>{patient.user.name}</h2>
+            <p style={{ marginTop: 4, color: "var(--su-ink-muted)" }}>{patient.user.email}</p>
+          </div>
+        </div>
         <dl
           style={{
             marginTop: 18,
@@ -85,6 +99,15 @@ export default async function PatientDetailPage({ params }: Props) {
 
       <section className="su-stack">
         <p className="su-label">Historial de planes</p>
+        {patient.plans.length === 0 ? (
+          <div className="su-card">
+            <EmptyState title="Sin planes todavía">
+              <p style={{ margin: 0 }}>
+                Creá el primero con el botón de nuevo plan de la ficha.
+              </p>
+            </EmptyState>
+          </div>
+        ) : null}
         {patient.plans.map((plan) => {
           const totals = roundTotals(
             calculatePlanTotals(plan.slots.flatMap((s) => s.items)),

@@ -192,7 +192,7 @@ Hace falta `.env`, la base sembrada (`npm run db:seed`) y, si no hay un `npm run
 
 ```
 smae-demo/
-  prisma/           # Schema, seed y catálogo JSON
+  prisma/           # Schema, seed y catálogo SMAE (`data/smae-foods.ts`)
   public/
     assets/
       images/
@@ -206,6 +206,18 @@ smae-demo/
   playwright.config.ts
   vitest.config.ts
 ```
+
+---
+
+## Trabajo futuro (no implementado)
+
+Queda fuera de esta demo, a propósito:
+
+- **Panel admin:** alta de profesionales de la salud (hoy el nutriólogo se siembra; el alta en pantalla es solo de pacientes).
+- **Alias regionales:** nombres México / Argentina para el mismo equivalente SMAE, sin cambiar kcal ni grupos.
+- **Capa educativa GAPA:** mensajes y gráfica argentinos, sin usar esas porciones para validar un intercambio.
+
+No se plantea un SMAE argentino ni un motor GAPA. El detalle de alcance está en `documentacion/tfg/mejoras-futuras.md` (carpeta local del TFG).
 
 ---
 

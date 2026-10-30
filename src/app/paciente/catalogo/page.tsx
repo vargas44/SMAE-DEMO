@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { EquivalentAveragesTable } from "@/components/EquivalentAveragesTable";
 
 export default async function PacienteCatalogoPage() {
   const session = await auth();
@@ -19,6 +20,7 @@ export default async function PacienteCatalogoPage() {
           Catálogo SMAE
         </h2>
       </div>
+      <EquivalentAveragesTable groups={groups} />
       {groups.map((group) => (
         <details key={group.id} className="su-card">
           <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 16 }}>

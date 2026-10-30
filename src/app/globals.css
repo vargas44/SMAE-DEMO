@@ -179,7 +179,7 @@ body {
   align-items: center;
   height: 36px;
   padding: 0 16px;
-  border: 0;
+  border: 2px solid transparent;
   border-radius: var(--su-r-pill);
   background: transparent;
   color: var(--su-ink-muted);
@@ -188,12 +188,13 @@ body {
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: box-shadow 280ms ease, color 280ms ease, background 280ms ease;
+  transition: box-shadow 280ms ease, color 280ms ease, background 280ms ease, border-color 280ms ease;
 }
 
 .su-tab.is-active {
   background: var(--su-surface);
   color: var(--su-ink);
+  border-color: var(--su-teal);
   box-shadow: var(--su-elev-2);
 }
 
@@ -623,6 +624,141 @@ select.su-field {
   gap: 8px;
 }
 
+/* Plato SMAE — borrar este bloque junto con PlanPlate.tsx para revertir. */
+.su-plate__lead {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--su-ink-muted);
+  max-width: 36rem;
+}
+
+.su-plate__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(28px, 6vw, 72px);
+  margin-top: 18px;
+}
+
+.su-plate__legend {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.su-plate__chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 4px 8px 4px 4px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* ===== PLATO HOVER — revertir: borrar este bloque y el estado `hot` de PlanPlate ===== */
+.su-plate__chip,
+.su-plate__glyph {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease,
+    color 220ms ease;
+}
+
+.su-plate__slice {
+  cursor: pointer;
+  transform-box: view-box;
+  transform-origin: 120px 120px;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease,
+    filter 220ms ease;
+}
+
+.su-plate.is-hovering .su-plate__slice:not(.is-hot) {
+  opacity: 0.38;
+}
+
+.su-plate.is-hovering .su-plate__chip:not(.is-hot) {
+  opacity: 0.42;
+}
+
+.su-plate__slice.is-hot {
+  opacity: 1;
+  transform: scale(1.07);
+  filter: brightness(1.12);
+}
+
+.su-plate__chip.is-hot {
+  background: color-mix(in srgb, var(--su-surface) 70%, white);
+  box-shadow: var(--su-elev-2);
+  transform: translateX(6px);
+}
+
+.su-plate__chip.is-hot .su-plate__glyph {
+  transform: scale(1.08);
+}
+
+.su-plate__chip.is-hot .su-plate__name {
+  color: var(--su-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su-plate__chip,
+  .su-plate__glyph,
+  .su-plate__slice {
+    transition: none;
+  }
+
+  .su-plate__slice.is-hot,
+  .su-plate__chip.is-hot,
+  .su-plate__chip.is-hot .su-plate__glyph {
+    transform: none;
+  }
+}
+/* ===== PLATO HOVER END ===== */
+
+.su-plate__glyph {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.su-plate__pct {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--su-ink);
+  line-height: 1;
+}
+
+.su-plate__name {
+  font-size: 12px;
+  color: var(--su-ink-muted);
+  font-weight: 600;
+}
+
+.su-plate__dish {
+  display: grid;
+  place-items: center;
+}
+
+.su-plate__svg {
+  width: min(288px, 72vw);
+  height: auto;
+  overflow: visible;
+}
+
 .su-exchange {
   margin-top: 12px;
   display: flex;
@@ -740,6 +876,18 @@ select.su-field {
   .su-btn {
     max-width: 100%;
   }
+
+  .su-plate__body {
+    flex-direction: column;
+  }
+
+  .su-plate__svg {
+    width: min(240px, 72vw);
+  }
+
+  .su-plate__legend {
+    width: min(100%, 280px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -753,3 +901,259 @@ select.su-field {
     animation: none;
   }
 }
+
+/* ===== KIT MUESTRA (documentacion/Revisar/muestra de elementos.html) =====
+   Para revertir: borrar este bloque entero y dejar de usar
+   SuAvatar, EmptyState y SuCrumb. No toca sombras fuertes del kit. */
+
+:root {
+  --su-bg: #ece5d8;
+  --su-surface: #ede7db;
+  --su-surface-muted: #e5ded0;
+  --su-teal: #0a4d56;
+  --su-teal-hover: #083c43;
+  --su-teal-soft: #13717d;
+  --su-badge-1: #0a4d56;
+  --su-badge-2: #13717d;
+}
+
+.su-page {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(236, 229, 216, 0.57) 0%,
+      rgba(236, 229, 216, 0.67) 100%
+    ),
+    var(--su-bg-image);
+}
+
+.su-btn {
+  border-radius: var(--su-r-3);
+  height: 42px;
+}
+
+.su-btn--primary {
+  background: linear-gradient(145deg, #0e5a65, #083c43);
+  box-shadow:
+    4px 4px 10px rgba(180, 170, 155, 0.5),
+    -2px -2px 6px rgb(255 255 255 / 0.28);
+}
+
+.su-btn--primary:hover {
+  background: linear-gradient(145deg, #13717d, #0a4d56);
+}
+
+.su-btn--primary:active,
+.su-btn--primary.is-loading {
+  background: #0a444c;
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.32);
+}
+
+.su-btn.is-loading {
+  pointer-events: none;
+  gap: 10px;
+}
+
+.su-btn.is-loading::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgb(255 255 255 / 0.28);
+  border-top-color: #fff;
+  animation: su-spin 0.7s linear infinite;
+}
+
+@keyframes su-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.su-tabs {
+  border-radius: var(--su-r-4);
+  padding: 6px;
+}
+
+.su-tab {
+  border-radius: var(--su-r-3);
+}
+
+.su-field {
+  border-radius: var(--su-r-3);
+}
+
+.su-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--su-surface);
+  color: var(--su-teal);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: var(--su-elev-2);
+}
+
+.su-list-item .su-row {
+  align-items: center;
+}
+
+.su-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.su-empty {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 36px 20px;
+}
+
+.su-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--su-surface);
+  color: var(--su-ink-muted);
+  box-shadow: var(--su-inset);
+}
+
+.su-empty__title {
+  margin: 8px 0 0;
+  font-size: 1.15rem;
+}
+
+.su-empty__text {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--su-ink-muted);
+  font-size: 14px;
+}
+
+.su-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--su-ink-muted);
+}
+
+.su-crumb a {
+  color: var(--su-teal);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.su-crumb a:hover {
+  text-decoration: underline;
+}
+
+.su-crumb__now {
+  color: var(--su-ink);
+  font-weight: 600;
+}
+
+.su-crumb__sep {
+  color: var(--su-ink-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su-btn.is-loading::before {
+    animation: none;
+  }
+}
+
+/* ===== KIT MUESTRA END ===== */
+
+/* ===== APORTE EQUIVALENTE — revertir: borrar este bloque y EquivalentAveragesTable ===== */
+
+.su-eq__title {
+  margin: 8px 0 0;
+  font-size: 1.2rem;
+}
+
+.su-eq__lead {
+  margin: 8px 0 16px;
+  max-width: 40rem;
+  color: var(--su-ink-muted);
+  font-size: 14px;
+}
+
+.su-eq-table {
+  min-width: 640px;
+}
+
+.su-eq-table th,
+.su-eq-table td {
+  padding: 10px 14px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.su-eq-table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--su-teal);
+  border-bottom: 2px solid var(--su-teal);
+}
+
+.su-eq-table__banner {
+  text-align: center;
+  border-bottom: 1px solid color-mix(in srgb, var(--su-teal) 35%, transparent);
+}
+
+.su-eq-table th.su-eq-table__stub,
+.su-eq-table th.su-eq-table__group,
+.su-eq-table td.su-eq-table__sub {
+  text-align: left;
+}
+
+.su-eq-table__group {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--su-ink);
+  background: var(--su-surface);
+  border-bottom: 1px solid var(--su-surface-muted);
+}
+
+.su-eq-table__sub {
+  color: var(--su-ink-muted);
+  font-size: 13px;
+}
+
+.su-eq-table tbody td,
+.su-eq-table tbody th {
+  border-bottom: 1px solid var(--su-surface-muted);
+}
+
+.su-eq-hl {
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.su-eq-hl--protein,
+.su-eq-hl--carb {
+  background: color-mix(in srgb, var(--su-success) 22%, white);
+  color: var(--su-success);
+}
+
+.su-eq-hl--lipid {
+  background: color-mix(in srgb, #4a7a9a 22%, white);
+  color: #3d5c6b;
+}
+
+/* ===== APORTE EQUIVALENTE END ===== */
