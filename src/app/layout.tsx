@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   description:
     "Demo web del Sistema Mexicano de Alimentos Equivalentes con perfiles nutriólogo y paciente",
   icons: {
-    icon: [{ url: "/assets/images/icons/logo.png", type: "image/png" }],
-    apple: [{ url: "/assets/images/icons/logo.png", type: "image/png" }],
+    icon: [{ url: "/assets/images/icons/logo-plato.png", type: "image/png" }],
+    apple: [{ url: "/assets/images/icons/logo-plato.png", type: "image/png" }],
   },
 };
 

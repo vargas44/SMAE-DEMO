@@ -43,20 +43,15 @@ export default function LoginPage() {
       <div className="su-auth-grid">
         <section className="su-card su-raised-lg su-rise">
           <div className="su-brand" style={{ marginBottom: 18 }}>
-            <div className="su-brand-mark" aria-hidden="true">
+            <div className="su-brand-mark su-brand-mark--wordmark">
               <img
-                src="/assets/images/icons/logo.png"
-                alt=""
+                src="/assets/images/icons/logo.png?v=2"
+                alt="SMAE"
                 className="su-brand-mark__img"
               />
             </div>
-            <div>
-              <p className="su-brand-name">SMAE Demo</p>
-              <p className="su-brand-sub">Demo TFG</p>
-            </div>
           </div>
-          <p className="su-label">Trabajo final</p>
-          <h1 className="su-title" style={{ marginTop: 8 }}>
+          <h1 className="su-title">
             Equivalentes con profundidad suave
           </h1>
           <p className="su-subtitle">

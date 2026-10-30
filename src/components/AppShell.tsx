@@ -30,16 +30,12 @@ export function AppShell({
       <div className="su-shell" suppressHydrationWarning>
         <header className="su-topbar" suppressHydrationWarning>
           <div className="su-brand">
-            <div className="su-brand-mark" aria-hidden="true">
+            <div className="su-brand-mark su-brand-mark--wordmark">
               <img
-                src="/assets/images/icons/logo.png"
-                alt=""
+                src="/assets/images/icons/logo.png?v=2"
+                alt={brand}
                 className="su-brand-mark__img"
               />
-            </div>
-            <div>
-              <p className="su-brand-name">{brand}</p>
-              <p className="su-brand-sub">Demo TFG</p>
             </div>
           </div>
           <nav className="su-tabs" aria-label="Navegación principal">
